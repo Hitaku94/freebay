@@ -1,8 +1,10 @@
 <h1>Item create form</h1>
  <form  action="/items/create" method="POST">
-
+  <div>
   <label>Title</label>
   <input type="text" name="title" placeholder="Item title">
+  <br>
+  <br>
   <br>
   <label for="category">Choose a category:</label>
   <select name='category' id="category">
@@ -11,15 +13,43 @@
     <option value="games">Games</option>
     <option value="garden">Garden</option>
   </select>
+  <br>  
+  <br>  
+  <br>  
+  </div>
+
+  <div>
+  <input type="radio" name="category" id="new" value="new" selected>
+  <label for="new">New</label>
+  <input type="radio" name="category" id="used" value="used">
+  <label for="used">Used</label>
+  </div>
+  <br><br><br>
+  <div>
+    <label>Price</label>
+    <input type="text" name="price" placeholder="Item price">
+    <br><br><br>
+  </div>
+
+  <div>
+  <textarea id="description" name="description" rows="4" cols="50" placeholder="Description">
+  </textarea>
+  </div>
   <br>
-  <input type="radio" name="newitem" value="New">
-  <label for="newitem">New</label><br>
-  <input type="radio" name="useditem" value="Used">
-  <label for="useditem">Used</label><br>
+
+
+   <img src="/images/default-image.jpg" alt="item img" width="250">
+  <div><span>Add Images</span></div>
+  <br>
+  <br>
   <br>
   <button type="submit">Update</button>
   <br>
   <hr>
+
+ 
+
+
 
 {{#if msg}}
  <div class="error">{{msg}}</div>
