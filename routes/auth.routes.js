@@ -4,6 +4,15 @@ const UserModel = require('../models/User.model')
 const ItemsModel = require('../models/Items.model')
 const MsgModel = require('../models/Message.model')
 
+const validate = (req, res, next) => {
+  if (req.session.userInfo) {
+    next()
+  }
+  else {
+    res.redirect('/login')
+  }
+}
+
 router.get('/signup', (req, res, next) => {
   res.render('auth/signup.hbs')
 })
