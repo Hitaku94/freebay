@@ -15,7 +15,7 @@ const itemSchema = new Schema({
   },
   img: {
     type: String,
-    default: '../assets/default-image.jpg',
+    default: '/images/default-image.jpg',
   },
   price: {
     type: Number,

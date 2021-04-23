@@ -88,7 +88,7 @@ router.get('/items', /*validate,*/ (req,res,next)=>{
 })
 
 router.get('/items/create', /*validate,*/(req,res,next)=>{
-  res.render('/item-create.hbs')
+  res.render('item-create-form.hbs')
 })
 
 router.post('/items/create', /*validate,*/(req,res,next)=>{
