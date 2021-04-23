@@ -1,6 +1,8 @@
 const router = require("express").Router()
 const bcrypt = require('bcryptjs');
-const UserModel = require('../models/User.model.js')
+const UserModel = require('../models/User.model')
+const ItemsModel = require('../models/Items.model')
+const MsgModel = require('../models/Message.model')
 
 router.get('/signup', (req, res, next) => {
   res.render('auth/signup.hbs')
@@ -36,5 +38,27 @@ router.post('/signup', (req, res, next) => {
 router.get('/login', (req, res, next) => {
   res.render('auth/login.hbs')
 })
+
+
+
+/*ITEMS*/
+router.get('/items', /*validate,*/ (req,res,next)=>{
+    
+  ItemsModel.find()
+    .then((result) => {
+      res.render('items-list.hbs', {result})
+      
+    }).catch((err) => {
+        next(err)
+    });
+})
+
+router.get('/items/create', /*validate,*/, (req,res,next)=>{
+  res.render('/item-create.hbs')
+})
+
+router.post('items/create', /*validate,*/(req,res,next)=>{
+  
+});       
 
 module.exports = router;

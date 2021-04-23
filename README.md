@@ -64,11 +64,11 @@ GET /logout
 - redirect to /
 
 
-GET /create
+GET /items/create
 - renders createpage if logged in
 - else homepage
 
-POST /create
+POST /items/create
 body:
 Item Title
 Category
