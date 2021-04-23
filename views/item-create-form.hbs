@@ -1,1 +1,26 @@
 <h1>Item create form</h1>
+ <form  action="/items/create" method="POST">
+
+  <label>Title</label>
+  <input type="text" name="title" placeholder="Item title">
+  <br>
+  <label for="category">Choose a category:</label>
+  <select name='category' id="category">
+    <option value="house">House</option>
+    <option value="sports">Sports</option>
+    <option value="games">Games</option>
+    <option value="garden">Garden</option>
+  </select>
+  <br>
+  <input type="radio" name="newitem" value="New">
+  <label for="newitem">New</label><br>
+  <input type="radio" name="useditem" value="Used">
+  <label for="useditem">Used</label><br>
+  <br>
+  <button type="submit">Update</button>
+  <br>
+  <hr>
+
+{{#if msg}}
+ <div class="error">{{msg}}</div>
+{{/if}}

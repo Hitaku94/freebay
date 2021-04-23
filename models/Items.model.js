@@ -7,6 +7,7 @@ const itemSchema = new Schema({
     required: true,
     unique: true,
   },
+  category: [String],
   condition: [String],
     
   description: {

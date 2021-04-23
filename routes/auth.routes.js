@@ -74,9 +74,15 @@ router.post('/login', (req, res, next) => {
   });
 })
 
+router.get('/logout', (req,res,next)=>{
+  req.app.locals.isUserLoggedIn = false  
+  req.session.destroy()
+  res.redirect('/')
+})
+
 
 /*ITEMS*/
-router.get('/items', /*validate,*/ (req,res,next)=>{
+router.get('/items', validate, (req,res,next)=>{
     
   ItemsModel.find()
     .then((result) => {
@@ -87,17 +93,17 @@ router.get('/items', /*validate,*/ (req,res,next)=>{
     });
 })
 
-router.get('/items/create', /*validate,*/(req,res,next)=>{
+router.get('/items/create', validate, (req,res,next)=>{
   res.render('item-create-form.hbs')
 })
 
-router.post('/items/create', /*validate,*/(req,res,next)=>{
-  const {title, condition, description, img, price, seller} = req.body
+router.post('/items/create', validate, (req,res,next)=>{
+  const {title, category, condition, description, img, price, seller} = req.body
   if (!title || !description || !price) {
     res.render('item-create-form.hbs', { msg: "Please enter all field" })
     return;
   }
-  ItemsModel.create({title, condition, description, img, price, seller})
+  ItemsModel.create({title, category, condition, description, img, price, seller})
     .then((result) => {
       res.redirect('/items',{result})
     }).catch((err) => {
@@ -105,7 +111,7 @@ router.post('/items/create', /*validate,*/(req,res,next)=>{
     });
 });       
 
-router.get('/items/:itemId', /*validate,*/ (req,res,next)=>{
+router.get('/items/:itemId',validate, (req,res,next)=>{
   const {itemId} = req.params
   ItemsModel.finbyId(itemId)
   .then((result) => {
@@ -115,7 +121,7 @@ router.get('/items/:itemId', /*validate,*/ (req,res,next)=>{
   });
 })
 
-router.get('/items/:itemId/update', /*validate,*/ (req,res,next)=>{
+router.get('/items/:itemId/update', validate, (req,res,next)=>{
   const {itemId} = req.params
   ItemsModel.finbyId(itemId)
   .then((result) => {
@@ -125,9 +131,9 @@ router.get('/items/:itemId/update', /*validate,*/ (req,res,next)=>{
   })
 })
 
-  router.post('/items/:itemId/update', (req,res,next)=>{
+  router.post('/items/:itemId/update', validate, (req,res,next)=>{
     const {itemId} = req.params 
-    const {title, description, category, condition, img, price} = req.body;
+    const {title, category, condition, description, img, price} = req.body;
     
     ItemsModel.findByIdAndUpdate(itemId, {title, description, category, condition, img, price}, {new:true})
     .then((result)=>{
@@ -138,7 +144,7 @@ router.get('/items/:itemId/update', /*validate,*/ (req,res,next)=>{
     })
   })
      
-  router.post('/items/:itemId/delete', (req, res, next)=>{
+  router.post('/items/:itemId/delete', validate, (req, res, next)=>{
       const {itemId} = req.params
       ToDo.findByIdAndDelete(itemId)
       .then((result) => {
