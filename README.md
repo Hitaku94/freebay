@@ -26,9 +26,6 @@ Backlog
 - Rating
 
 
-
-
-
 ROUTES:
 GET /
 - renders Homepage
@@ -131,10 +128,10 @@ GET /messages
 - redirects to / if not logged in
 - renders messages page
 
-GET /messagewith/:itemId
+GET /messages/:itemId
  - renders messagewith
 
-POST /messsagewith/:itemId
+POST /messsages/:itemId
 body:
 previus message containers with ${user}
 text input
