@@ -23,6 +23,7 @@ Backlog
 - Related items
 - Map API
 - SellerID profile
+- Rating
 
 
 
@@ -84,6 +85,25 @@ GET /items/:itemId
 - redirects to /login if not logged in
 - else renders /:itemId page
 
+GET /items/:itemId/update
+- redirects to /login if not logged in
+- if validates itemId with userId renders update forms
+- else renders items/:itemId
+
+POST /items/:itemId/update
+- (with values from :itemId)
+body:
+Item Title
+Category
+Condition
+Description
+Add Images
+Add item
+- redirects /items/:itemsId
+
+POST /items/:itemId/delete
+ - renders profile
+
 GET /items/:itemId/congrats
 - render congrats with item & user info
 - messages link**
@@ -107,7 +127,7 @@ new email (crUd)
 new password (crUd)
 - redirects to /profile
 
-GET /message
+GET /messages
 - redirects to / if not logged in
 - renders messages page
 
@@ -120,6 +140,9 @@ previus message containers with ${user}
 text input
 - renders messagewith
 
+
+
+
 Models
 
 - UserModel
@@ -127,7 +150,7 @@ Models
 username: String,
 email: String,
 password: String,
-rating: Number
+
 
 
 - ItemModel
@@ -174,16 +197,16 @@ messages: [
 
 Links
 Trello
-Link to your trello board or picture of your physical board
+<a href="https://trello.com/b/zuRwQAeL/ironhack">Project Module 2</a>
+
 
 Git
-The url to your repository and to your deployed project
+<a href="https://github.com/chipicuajo/freebay">Freebay</a>
 
-Repository Link
 
 Deploy Link
 
 Slides
-The url to your presentation slides
+
 
 Slides Link
