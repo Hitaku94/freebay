@@ -59,7 +59,7 @@ password
 - if failed - renders auto/login (with flash msg)
 - else redirects to / if user logged in
 
-POST /logout
+GET /logout
 - end session.destroy()
 - redirect to /
 

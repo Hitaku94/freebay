@@ -17,7 +17,8 @@ const userSchema = new Schema({
   },
   img: {
     type: String,
-    default: ''
+    default: '../assets/default-avatar.png',
+  },
 
 });
 

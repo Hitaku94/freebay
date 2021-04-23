@@ -1,0 +1,26 @@
+<h1>Settings form</h1>
+
+<form action="/profile" method="POST">
+  <label>Current Username</label>
+  <input type="text" name="username" placeholder="Enter existing username">
+
+  <label>Current Password</label>
+  <input type="password" name="password" placeholder="Enter current Password">
+  
+  
+  <label>New Username</label>
+  <input type="text" name="newuser" placeholder="Enter NEW usermane">
+
+  <label>New E-mail</label>
+  <input type="email" name="newemail" placeholder="Enter NEW E-mail">
+
+  <label>New Password</label>
+  <input type="password" name="newpassword" placeholder="Enter NEW Password">
+  
+
+ <button type="submit">Update</button>
+</form>
+
+{{#if msg}}
+ <div class="error">{{msg}}</div>
+{{/if}}
