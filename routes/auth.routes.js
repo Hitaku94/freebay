@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const bcrypt = require('bcryptjs');
+const User = require("../models/User.model.js");
 const UserModel = require('../models/User.model.js')
 
 router.get('/signup', (req, res, next) => {
@@ -36,5 +37,32 @@ router.post('/signup', (req, res, next) => {
 router.get('/login', (req, res, next) => {
   res.render('auth/login.hbs')
 })
+
+router.post('/login', (req, res, next) => {
+  const { username, password } = req.body
+  UserModel.findOne({username})
+  .then((result) => {
+    if(!result) {
+      res.render('auth/login.hbs', {msg: "Username or password does not match"})
+    }
+    else {
+      bcrypt.compare(password, result.password)
+      .then((passResult) => {
+        if(passResult) {
+          req.session.userInfo = result
+          req.app.locals.isUserLoggedIn = true
+          res.redirect('/')
+        }
+        else {
+          res.render('auth/login.hbs', {msg: "Username or password does not match"})
+        }
+      })
+    }
+  })
+  .catch((err) => {
+    next(err)
+  });
+})
+
 
 module.exports = router;
