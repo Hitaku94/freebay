@@ -1,1 +1,54 @@
-<h1>Item edit form</h1>
+<h1>Update your item "{{result.title}}"</h1>
+
+
+ <form  action="/items/{{result._id}}/update" method="POST">
+  <div>
+  <label>Title</label>
+  <input type="text" name="title" value={{result.title}}>
+  <br>
+  <br>
+  <br>
+  <label for="category">Choose a category:</label>
+  <select name='category' id="category">
+    <option value="house">House</option>
+    <option value="sports">Sports</option>
+    <option value="games">Games</option>
+    <option value="garden">Garden</option>
+  </select>
+  <br>  
+  <br>  
+  <br>  
+  </div>
+
+  <div>
+  <input type="radio" name="condition" id="new" value="new">
+  <label for="new">New</label>
+  <input type="radio" name="condition" id="used" value="used">
+  <label for="used">Used</label>
+  </div>
+  <br><br><br>
+  <div>
+    <label>Price</label>
+    <input type="text" name="price" value={{result.price}}>
+    <br><br><br>
+  </div>
+<br>  
+ 
+  <div>
+  <textarea id="description" name="description" rows="4" cols="50">{{result.description}}</textarea>
+  </div>
+  <br>
+
+  <!-- <img src="/images/default-image.jpg" alt="item img" width="250">
+  <div><span>Add Images</span></div> -->
+  <br>
+  <button type="submit">Update Item</button>
+  <br>
+
+ </form><form  action="/items/{{result._id}}/delete" method="POST">
+ <button type="submit">Delete Item</button>
+ </form>
+ 
+{{#if msg}}
+ <div class="error">{{msg}}</div>
+{{/if}}

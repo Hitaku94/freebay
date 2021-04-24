@@ -119,9 +119,9 @@ router.post('/items/create', validate, (req,res,next)=>{
 router.get('/items/:itemId',validate, (req,res,next)=>{
   
   const {itemId} = req.params
-  ItemsModel.finbyId(itemId)
+  ItemsModel.findById(itemId)
   .then((result) => {
-    res.render('item-detail.hbs', {result})
+    res.render('item-details.hbs', {result})
   }).catch((err) => {
     next(err)
   });
@@ -129,7 +129,7 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
 
 router.get('/items/:itemId/update', validate, (req,res,next)=>{
   const {itemId} = req.params
-  ItemsModel.finbyId(itemId)
+  ItemsModel.findById(itemId)
   .then((result) => {
     res.render('item-edit-form.hbs', {result})
   }).catch((err) => {
@@ -154,7 +154,7 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
       const {itemId} = req.params
       ItemsModel.findByIdAndDelete(itemId)
       .then((result) => {
-        res.render('profile.hbs', {result})
+        res.redirect('/profile')
       })
       .catch((err)=>next(err))
   })
