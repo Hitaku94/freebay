@@ -139,11 +139,11 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
 
   router.post('/items/:itemId/update', validate, (req,res,next)=>{
     const {itemId} = req.params 
-    const {title, category, condition, description, img, price} = req.body;
+    const {title, category, condition, description, price} = req.body;
     
-    ItemsModel.findByIdAndUpdate(itemId, {title, description, category, condition, img, price}, {new:true})
+    ItemsModel.findByIdAndUpdate(itemId, {title, description, category, condition, price})
     .then((result)=>{
-        res.redirect(`/items/${itemsId}`, {result})
+        res.redirect(`/profile`)
     })
     .catch((err)=>{
         next(err)
