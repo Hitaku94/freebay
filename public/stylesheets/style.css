@@ -76,11 +76,11 @@ img {
   display: inline-flex;
   justify-content: center;
   flex-direction: column;
-  text-align: center;
+  text-align: start;
   padding-bottom: 20px;
   padding-left: 10px;
   margin-bottom: 16px;
-  margin-left: -10px;
+  margin-left: 0px;
 
 }
 
