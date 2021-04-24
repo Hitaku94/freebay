@@ -1,1 +1,11 @@
 <h1>Items page</h1>
+<div class="item-container">
+{{#each result}}
+<div class="item-list">
+<img src="{{this.img}}">
+<h5>{{this.title}}</h4>
+{{this.price}}$
+{{this.seller}}
+</div>
+{{/each}}
+</div>

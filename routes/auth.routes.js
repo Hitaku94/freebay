@@ -105,7 +105,7 @@ router.post('/items/create', validate, (req,res,next)=>{
   }
   ItemsModel.create({title, category, condition, description, img, price, seller})
     .then((result) => {
-      res.redirect('/items',{result})
+      res.redirect('/items', {result})
     }).catch((err) => {
         next(err)
     });

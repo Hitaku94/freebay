@@ -1,6 +1,6 @@
 html
 {
-    overflow: hidden;
+    
 }
 
 html, body
@@ -10,7 +10,7 @@ html, body
 
 
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0;
   box-sizing: border-box;
 }
@@ -24,12 +24,14 @@ h1 {
   color: 15px;
 }
 
+
 .form-container {
-  display: flex;
+  display:flex;
   justify-content: center;
   align-items: center;
-
+  flex-direction: column;
   height: 70vh;
+ 
 }
 
 .button-container {
@@ -46,5 +48,50 @@ h1 {
   height: 50px;
   border-radius: 2px;
 
-  
+}
+
+.auth-form {
+  border: 1px solid;
+  padding: 30px;
+  border-color:lightblue;
+
+}
+
+.navbar-brand {
+  padding-left: 20px;
+}
+
+.navbar-expand-lg .navbar-collapse {
+  display: flex!important;
+  flex-basis: auto;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+img {
+  width: 200px;
+}
+
+.item-list {
+  display: inline-flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  margin-bottom: 16px;
+  margin-left: -10px;
+
+}
+
+.item-container {
+  display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: center;
+  padding-left: 30px;
+  padding-right: 30px;
+ 
 }
