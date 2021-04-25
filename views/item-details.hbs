@@ -1,90 +1,39 @@
-<!--<div class="item-detail-img">
+<div class="item-detail-img">
 
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="{{result.img}}" class="d-block w-100" alt="...">
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{{result.img}}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="..." class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="..." class="d-block w-100" alt="...">
+      </div>
     </div>
-    <!--<div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="...">
-    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+
+  <div class="item-detail">
+    <h2>{{result.title}}</h2>
+    <hr>
+    <p class="price">price: <span class="result-price"> ${{result.price}}</span></p>
+    <h4>About this item:</h4>
+    <div class="text-box">
+    <p>{{result.description}}</p>
+    </div>
+    <ul>
+      <li class="list-detail">Category: {{result.category}}</li>
+      <li class="list-detail">Condition: {{result.condition}}</li>
+    </ul>
+    <P>{{result.seller}}</p>
+  </div>
 </div>
-
-<div class="item-detail">
-<h3>{{result.title}}</h3>
-{{result.price}}
-{{result.category}}
-{{result.condition}}
-{{result.description}}
-{{result.seller}}
-</div>
-</div>-->
-
-
-<h1>Specific item "{{result.title}}"</h1>
-
- <form  action="/items/{{result._id}}/update" method="POST">
-  <div>
-  <label>Title</label>
-  <input type="text" name="title" value={{result.title}}><a href="/items/{{result._id}}/update">Edit</a> 
-  <br>
-  <br>
-  <br>
-  <label for="category">Choose a category:</label>
-  <select name='category' id="category">
-    <option value="house">House</option>
-    <option value="sports">Sports</option>
-    <option value="games">Games</option>
-    <option value="garden">Garden</option>
-  </select>
-  <br>  
-  <br>  
-  <br>  
-  </div>
-
-  <div>
-  <input type="radio" name="condition" id="new" value="new">
-  <label for="new">New</label>
-  <input type="radio" name="condition" id="used" value="used">
-  <label for="used">Used</label>
-  </div>
-  <br><br><br>
-  <div>
-    <label>Price</label>
-    <input type="text" name="price" value={{result.price}}>
-    <br><br><br>
-  </div>
-<br>  
- 
-  <div>
-  <textarea id="description" name="description" rows="4" cols="50">{{result.description}}</textarea>
-  </div>
-  <br>
-
-
-  <img src="/images/default-image.jpg" alt="item img" width="250">
-  <div><span>Add Images</span></div>
-
-  <a href="/items">Back</a>
-  <br>
-  <hr>
-
- 
-
-
-
-{{#if msg}}
- <div class="error">{{msg}}</div>
-{{/if}}

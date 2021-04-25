@@ -15,6 +15,10 @@ const validate = (req, res, next) => {
   }
 }
 
+// Auth ROUTES
+
+  /* Sign up */
+
 router.get('/signup', (req, res, next) => {
   res.render('auth/signup.hbs')
 })
@@ -46,6 +50,8 @@ router.post('/signup', (req, res, next) => {
 
 })
 
+    /* Login */
+
 router.get('/login', (req, res, next) => {
   res.render('auth/login.hbs')
 })
@@ -76,12 +82,27 @@ router.post('/login', (req, res, next) => {
     });
 })
 
+/* Logout */
+
 router.get('/logout', (req, res, next) => {
   req.app.locals.isUserLoggedIn = false
   req.session.destroy()
   res.redirect('/')
 })
 
+// Other routes
+
+/* GET home page */
+
+router.get("/", (req, res, next) => {
+  ItemsModel.find()
+  .then((result) => {
+    res.render('index', { result })
+
+  }).catch((err) => {
+    next(err)
+  });
+})
 
 /*ITEMS*/
 router.get('/items', validate, (req, res, next) => {
@@ -119,17 +140,7 @@ router.post('/items/create', validate, (req,res,next)=>{
 });
 });
 
-
-router.get('/items/:itemId', validate, (req, res, next) => {
-  const { itemId } = req.params
-  ItemsModel.findById(itemId)
-    .then((result) => {
-      res.render('item-details.hbs', { result })
-      res.redirect('/items')
-    }).catch((err) => {
-      next(err)
-    });
-});       
+ 
 
 router.get('/items/:itemId',validate, (req,res,next)=>{
   

@@ -17,10 +17,18 @@ a {
   color: #00b7ff;
 }
 
-h1 {
-  color: 15px;
+h4 {
+  font-weight: 900;
 }
 
+hr{
+  width: 5%;
+  height: 30px;
+  color:black;
+  border:3px solid black;
+  opacity: 1;
+  margin-top: 0;
+}
 
 .form-container {
   display:flex;
@@ -78,6 +86,7 @@ img {
   padding-left: 10px;
   margin-bottom: 16px;
   margin-left: 0px;
+  text-align: center;
 
 }
 
@@ -90,8 +99,11 @@ img {
 	align-content: center;
   padding-left: 30px;
   padding-right: 30px;
+  
  
 }
+
+/* item detail page*/
 
 .item-detail {
   display: flex;
@@ -108,3 +120,69 @@ img {
 	flex-wrap: wrap;
 }
 
+.price {
+  font-weight:800;
+}
+
+.result-price {
+  color: darkcyan;
+}
+
+.text-box {
+  height: 120px;
+  padding-top: 15px;
+  padding-bottom: 25px;
+  width: 90vh;
+  font-size: small;
+}
+
+.list-detail {
+  list-style-image: url(../images/verified.png);
+}
+
+.carousel {
+  width: 30%;
+    margin: 50px;
+}
+/* */
+.middle-container {
+  display: inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: center;
+  padding-left: 30px;
+  padding-right: 30px; 
+  gap: 25px;
+  margin: auto 200px auto 200px;
+  border-color: darkslategrey;
+  border: 2px solid;
+  
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  height: 350px;
+ 
+
+}
+
+/* footer */
+
+.footer-container-up {
+  height: 150px;
+  background-color: #f1f1f1;
+}
+
+.footer-container-down {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 50px;
+  color: black;
+}
