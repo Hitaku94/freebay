@@ -24,12 +24,24 @@
          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
          </li>
+         {{#if isUserLoggedIn}}
+         <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/items/create">Create ad</a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/logout">Log out</a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/profile"><img src="https://www.flaticon.com/svg/vstatic/svg/1946/1946429.svg?token=exp=1619374883~hmac=f26acd99c9bf97da9bc41ea3cc07c9f5"></a>
+         </li>
+         {{else}}
          <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/login">Log in</a>
          </li>
          <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/signup">Sign up</a>
          </li>
+         {{/if}}
       </ul>
       </div>
    </nav>
