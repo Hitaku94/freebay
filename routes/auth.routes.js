@@ -2,7 +2,9 @@ const router = require("express").Router()
 const bcrypt = require('bcryptjs');
 const UserModel = require('../models/User.model')
 const ItemsModel = require('../models/Items.model')
-const MsgModel = require('../models/Message.model')
+const MsgModel = require('../models/Message.model');
+
+
 
 const validate = (req, res, next) => {
   if (req.session.userInfo) {
@@ -93,12 +95,15 @@ router.get('/items', validate, (req, res, next) => {
     });
 })
 
-router.get('/items/create', validate, (req, res, next) => {
+router.get('/items/create', validate, (req,res,next)=>{
+  
   res.render('item-create-form.hbs')
 })
 
-router.post('/items/create', validate, (req, res, next) => {
-  const { title, category, condition, description, img, price, seller } = req.body
+router.post('/items/create', validate, (req,res,next)=>{
+  let {title, category, condition, description, img, price, seller} = req.body
+  
+  seller = req.session.userInfo._id
   if (!title || !description || !price) {
     res.render('item-create-form.hbs', { msg: "Please enter all field" })
     return;
@@ -120,46 +125,60 @@ router.get('/items/:itemId', validate, (req, res, next) => {
   ItemsModel.findById(itemId)
     .then((result) => {
       res.render('item-details.hbs', { result })
+      res.redirect('/items')
     }).catch((err) => {
       next(err)
     });
-})
+});       
 
-
-
-router.get('/items/:itemId/update', validate, (req, res, next) => {
-  const { itemId } = req.params
+router.get('/items/:itemId',validate, (req,res,next)=>{
+  
+  const {itemId} = req.params
   ItemsModel.findById(itemId)
-    .then((result) => {
-      res.render('item-edit-form.hbs', { result })
-    }).catch((err) => {
-      next(err)
-    })
+  .then((result) => {
+    res.render('item-details.hbs', {result})
+  }).catch((err) => {
+    next(err)
+  });
 })
 
-router.post('/items/:itemId/update', validate, (req, res, next) => {
-  const { itemId } = req.params
-  const { title, category, condition, description, img, price } = req.body;
+router.get('/items/:itemId/update', validate, (req,res,next)=>{
+  const {itemId} = req.params
+  ItemsModel.findById(itemId)
+  .then((result) => {
+    res.render('item-edit-form.hbs', {result})
+  }).catch((err) => {
+    next(err)
+  })
+})
 
-  ItemsModel.findByIdAndUpdate(itemId, { title, description, category, condition, img, price }, { new: true })
-    .then((result) => {
-      res.redirect(`/items/${itemsId}`, { result })
+  router.post('/items/:itemId/update', validate, (req,res,next)=>{
+    const {itemId} = req.params 
+    const {title, category, condition, description, price} = req.body;
+    
+    ItemsModel.findByIdAndUpdate(itemId, {title, description, category, condition, price})
+    .then((result)=>{
+        res.redirect(`/profile`)
     })
     .catch((err) => {
       next(err)
     })
-})
+  })
+     
+  router.post('/items/:itemId/delete', validate, (req, res, next)=>{
+      const {itemId} = req.params
+      ItemsModel.findByIdAndDelete(itemId)
+      .then((result) => {
+        res.redirect('/profile')
+      })
+      .catch((err)=>next(err))
+  })
 
-router.post('/items/:itemId/delete', validate, (req, res, next) => {
-  const { itemId } = req.params
-  ToDo.findByIdAndDelete(itemId)
-    .then((result) => {
-      res.render('profile.hbs', { result })
-    })
-    .catch((err) => next(err))
-})
-
-
+  router.get('/profile', validate, (req,res,next)=>{
+      const {_id,username} = req.session.userInfo;
+      res.render('profile.hbs', {username});
+      
+  })
 
 
 
