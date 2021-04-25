@@ -2,7 +2,7 @@
 <div class="item-container">
 {{#each result}}
 <div class="item-list">
-<img src="{{this.img}}">
+<a href="/items/{{this.id}}"><img src="{{this.img}}"></a>
 <h5>{{this.title}}</h4>
 {{this.price}}$
 {{this.seller}}

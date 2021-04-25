@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose");
 
+require('../models/User.model')
+
 // TODO: Please make sure you edit the user model to whatever makes sense in this case
 const itemSchema = new Schema({
   title: {

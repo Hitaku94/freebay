@@ -1,7 +1,4 @@
-html
-{
-    
-}
+
 
 html, body
 {
@@ -73,7 +70,7 @@ img {
 }
 
 .item-list {
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   flex-direction: column;
   text-align: center;
@@ -95,3 +92,19 @@ img {
   padding-right: 30px;
  
 }
+
+.item-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+}
+
+.item-detail-img {
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+	flex-wrap: wrap;
+}
+
