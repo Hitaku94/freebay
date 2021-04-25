@@ -96,6 +96,7 @@ router.get('/logout', (req, res, next) => {
 
 router.get("/", (req, res, next) => {
   ItemsModel.find()
+  .populate('seller')
   .then((result) => {
     res.render('index', { result })
 
@@ -108,6 +109,7 @@ router.get("/", (req, res, next) => {
 router.get('/items', validate, (req, res, next) => {
 
   ItemsModel.find()
+   .populate('seller')
     .then((result) => {
       res.render('items-list.hbs', { result })
 
@@ -131,11 +133,10 @@ router.post('/items/create', validate, (req,res,next)=>{
   }
   ItemsModel.create({ title, category, condition, description, img, price, seller })
     .then((result) => {
-
       res.redirect('/items', { result })
     })
     .catch((err) => {
-      console.log(err)
+    
       next(err)
 });
 });
@@ -146,6 +147,7 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
   
   const {itemId} = req.params
   ItemsModel.findById(itemId)
+  .populate('seller')
   .then((result) => {
     res.render('item-details.hbs', {result})
   }).catch((err) => {

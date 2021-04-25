@@ -31,8 +31,8 @@
 <div class="item-list">
 <a href="/items/{{this._id}}"><img src="{{this.img}}">
 <h5>{{this.title}}</h5>
-<h6>{{this.price}}$</h6>
-<h6>{{this.seller}}</h6>
+<h6>${{this.price}}</h6>
+<h6>{{this.seller.username}}</h6>
 </a>
 </div>
 {{/each}}
