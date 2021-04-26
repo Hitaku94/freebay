@@ -97,8 +97,7 @@ router.get('/logout', (req, res, next) => {
 })
 
 router.get('/deactivate', validate, (req,res,next)=>{
-    let userId = req.session.userInfo._id
-    
+    let userId = req.session.userInfo._id    
     ItemsModel.find()
     .populate('seller')
     .then((result) => {
