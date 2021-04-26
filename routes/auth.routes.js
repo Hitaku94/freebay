@@ -5,9 +5,14 @@ const ItemsModel = require('../models/Items.model')
 const MsgModel = require('../models/Message.model');
 
 
+// Think about it!
+/*router.use((req, res, next) => {
+  req.app.locals.isUserLoggedIn = !!req.session.userInfo
+})*/
 
 const validate = (req, res, next) => {
   if (req.session.userInfo) {
+   
     next()
   }
   else {
@@ -44,7 +49,6 @@ router.post('/signup', (req, res, next) => {
   UserModel.create({ username, email, password: hash })
     .then((result) => {
       req.session.userInfo = result
-
       res.redirect('/')
     }).catch((err) => {
       next(err)
@@ -94,14 +98,26 @@ router.get('/logout', (req, res, next) => {
 
 router.get('/deactivate', validate, (req,res,next)=>{
     let userId = req.session.userInfo._id
-     UserModel.findByIdAndDelete(userId)
-      .then(() => {
-        req.app.locals.isUserLoggedIn = false
-        req.session.destroy()
-        res.redirect('/');        
-      })
-      .catch((err)=>next(err))
-  
+    
+    ItemsModel.find()
+    .populate('seller')
+    .then((result) => {
+      for(let i=0;i<result.length;i++){
+        if(result[i].seller._id.toString() === userId.toString()){
+          ItemsModel.findByIdAndDelete(result[i]._id)
+          .then((result)=> {
+            req.session.destroy()
+            return UserModel.findByIdAndDelete(userId)
+          })
+          .then((result) => {
+            req.app.locals.isUserLoggedIn = false  
+            res.redirect('/');
+          })
+          .catch((err)=> next(err))
+        }
+      }
+    })
+    .catch ((err)=> next(err))
 })
 
 router.get('/settings', validate, (req,res,next)=>{
@@ -165,6 +181,24 @@ router.get("/", (req, res, next) => {
   });
 })
 
+router.post('/=?', (req, res, next)=>{
+  const { title, category } = req.body
+  
+  const queryObj = {}
+  if (title) queryObj.title = title // add name query to query obj only if user input a search
+  if (category) queryObj.category = category // add category query to query obj if user selected a category
+  
+  // for example. if user does not select category then obj will be  {category: "a category"}
+  
+  ItemsModel.find(queryObj)
+  .then((result) => {
+    res.render('index.hbs', {result})
+  }).catch((err) => {
+      next(err)
+  });
+  
+  })
+
 /*ITEMS*/
 router.get('/items', validate, (req, res, next) => {
   req.app.locals.ownerIsVisitor = false;
@@ -220,6 +254,10 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
   }).catch((err) => {
     next(err)
   });
+
+  
+
+
 })
 
 router.get('/items/:itemId/update', validate, (req,res,next)=>{
@@ -266,10 +304,6 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
     const {username} = req.session.userInfo;
     res.render('profile.hbs', {username});
 })
-
-
-
-
 
 module.exports = router;
 
