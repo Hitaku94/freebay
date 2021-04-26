@@ -295,10 +295,22 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
   })
 
   router.get('/profile', validate, (req,res,next)=>{
-      const {username} = req.session.userInfo;
-      res.render('profile.hbs', {username});
+      ItemsModel.find()
+      .populate('seller')
+      .then((result) => {
+        for(let i=0;i<result.length;i++){
+          if(result[i].seller._id.toString() === req.session.userInfo._id.toString()){
+            ItemsModel.findOne(result[i]._id)
+            .populate('seller')
+            .then((data)=> {
+              res.render('profile.hbs', {data});
+            })
+            .catch ((err)=> next(err))
+          }
+        }
   })
-
+  })
+  
   router.post('/deactivate', validate, (req,res,next)=>{
     const {username} = req.session.userInfo;
     res.render('profile.hbs', {username});
