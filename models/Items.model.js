@@ -17,7 +17,7 @@ const itemSchema = new Schema({
   },
   img: {
     type: String,
-    default: '/images/default-image.jpg',
+    default: 'https://anythingworld.org/static/media/logo_legs.74693227.png',
   },
   price: {
     type: Number,

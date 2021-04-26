@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const UserModel = require('../models/User.model')
 const ItemsModel = require('../models/Items.model')
 const MsgModel = require('../models/Message.model');
+const { Model } = require("mongoose");
 
 
 
@@ -124,9 +125,10 @@ router.get('/items/create', validate, (req,res,next)=>{
 })
 
 router.post('/items/create', validate, (req,res,next)=>{
-  let {title, category, condition, description, img, price, seller} = req.body
-  console.log(req.session.userInfo)
-  seller = req.session.userInfo._id
+  const {title, category, condition, description, img, price} = req.body
+  
+  let seller = req.session.userInfo._id
+  console.log(seller)
   if (!title || !description || !price) {
     res.render('item-create-form.hbs', { msg: "Please enter all field" })
     return;
@@ -149,6 +151,7 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
   ItemsModel.findById(itemId)
   .populate('seller')
   .then((result) => {
+    console.log(result)
     res.render('item-details.hbs', {result})
   }).catch((err) => {
     next(err)
@@ -157,6 +160,7 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
 
 router.get('/items/:itemId/update', validate, (req,res,next)=>{
   const {itemId} = req.params
+  
   ItemsModel.findById(itemId)
   .then((result) => {
     res.render('item-edit-form.hbs', {result})
@@ -188,7 +192,7 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
   })
 
   router.get('/profile', validate, (req,res,next)=>{
-      const {_id,username} = req.session.userInfo;
+      const {username} = req.session.userInfo;
       res.render('profile.hbs', {username});
       
   })
@@ -197,3 +201,22 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
 
 
 module.exports = router;
+
+router.post('/', (req, res, next)=>{
+const { search, category } = req.body
+
+
+const queryObj = {}
+if (search) queryObj.name = search // add name query to query obj only if user input a search
+if (category) queryObj.category = category // add category query to query obj if user selected a category
+
+// for example. if user does not select category then obj will be  {category: "a category"}
+
+Item.find(queryObj)
+.then((result) => {
+  
+}).catch((err) => {
+  
+});
+
+})
