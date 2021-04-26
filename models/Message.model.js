@@ -6,20 +6,12 @@ const msgSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Item'
   },
-  buyer: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  seller: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
   messages: [
     {
-      sender: {
+      sender:{
         type: Schema.Types.ObjectId,
         ref: 'User'
-      },   
+      },
       message: {
         type: String,
         required: true,
@@ -27,7 +19,7 @@ const msgSchema = new Schema({
       timestamp: Date,
     },
   ],
-});
+})
 
 const Msg = model("Msg", msgSchema);
 

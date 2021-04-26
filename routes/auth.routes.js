@@ -151,7 +151,6 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
   .populate('seller')
   .then((result) => {
     let sellerId = result.seller._id.toString()
-    console.log(sellerId,typeof(sellerId), visitor, typeof(visitor))
     if( visitor === sellerId){ 
       req.app.locals.ownerIsVisitor = true;
     }
