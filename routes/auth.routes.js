@@ -6,9 +6,14 @@ const MsgModel = require('../models/Message.model');
 const { Model } = require("mongoose");
 
 
+// Think about it!
+/*router.use((req, res, next) => {
+  req.app.locals.isUserLoggedIn = !!req.session.userInfo
+})*/
 
 const validate = (req, res, next) => {
   if (req.session.userInfo) {
+   
     next()
   }
   else {
@@ -106,6 +111,24 @@ router.get("/", (req, res, next) => {
   });
 })
 
+router.post('/=?', (req, res, next)=>{
+  const { title, category } = req.body
+  
+  const queryObj = {}
+  if (title) queryObj.title = title // add name query to query obj only if user input a search
+  if (category) queryObj.category = category // add category query to query obj if user selected a category
+  
+  // for example. if user does not select category then obj will be  {category: "a category"}
+  
+  ItemsModel.find(queryObj)
+  .then((result) => {
+    res.render('index.hbs', {result})
+  }).catch((err) => {
+      next(err)
+  });
+  
+  })
+
 /*ITEMS*/
 router.get('/items', validate, (req, res, next) => {
 
@@ -146,7 +169,7 @@ router.post('/items/create', validate, (req,res,next)=>{
  
 
 router.get('/items/:itemId',validate, (req,res,next)=>{
-  
+
   const {itemId} = req.params
   ItemsModel.findById(itemId)
   .populate('seller')
@@ -156,6 +179,10 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
   }).catch((err) => {
     next(err)
   });
+
+  
+
+
 })
 
 router.get('/items/:itemId/update', validate, (req,res,next)=>{
@@ -202,21 +229,3 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
 
 module.exports = router;
 
-router.post('/', (req, res, next)=>{
-const { search, category } = req.body
-
-
-const queryObj = {}
-if (search) queryObj.name = search // add name query to query obj only if user input a search
-if (category) queryObj.category = category // add category query to query obj if user selected a category
-
-// for example. if user does not select category then obj will be  {category: "a category"}
-
-Item.find(queryObj)
-.then((result) => {
-  
-}).catch((err) => {
-  
-});
-
-})
