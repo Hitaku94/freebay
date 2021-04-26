@@ -125,7 +125,7 @@ router.get('/items/create', validate, (req,res,next)=>{
 
 router.post('/items/create', validate, (req,res,next)=>{
   let {title, category, condition, description, img, price, seller} = req.body
-  
+  console.log(req.session.userInfo)
   seller = req.session.userInfo._id
   if (!title || !description || !price) {
     res.render('item-create-form.hbs', { msg: "Please enter all field" })
@@ -133,7 +133,7 @@ router.post('/items/create', validate, (req,res,next)=>{
   }
   ItemsModel.create({ title, category, condition, description, img, price, seller })
     .then((result) => {
-      res.redirect('/items', { result })
+      res.redirect('/items')
     })
     .catch((err) => {
     
