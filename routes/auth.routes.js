@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const UserModel = require('../models/User.model')
 const ItemsModel = require('../models/Items.model')
 const MsgModel = require('../models/Message.model');
-const { Model } = require("mongoose");
 
 
 
@@ -108,7 +107,7 @@ router.get("/", (req, res, next) => {
 
 /*ITEMS*/
 router.get('/items', validate, (req, res, next) => {
-
+  req.app.locals.ownerIsVisitor = false;
   ItemsModel.find()
    .populate('seller')
     .then((result) => {
@@ -128,7 +127,6 @@ router.post('/items/create', validate, (req,res,next)=>{
   const {title, category, condition, description, img, price} = req.body
   
   let seller = req.session.userInfo._id
-  console.log(seller)
   if (!title || !description || !price) {
     res.render('item-create-form.hbs', { msg: "Please enter all field" })
     return;
@@ -146,19 +144,27 @@ router.post('/items/create', validate, (req,res,next)=>{
  
 
 router.get('/items/:itemId',validate, (req,res,next)=>{
-  
+  req.app.locals.ownerIsVisitor = false;
   const {itemId} = req.params
+  let visitor = req.session.userInfo._id
   ItemsModel.findById(itemId)
   .populate('seller')
   .then((result) => {
-    console.log(result)
+    let sellerId = result.seller._id.toString()
+    console.log(sellerId,typeof(sellerId), visitor, typeof(visitor))
+    if( visitor === sellerId){ 
+      req.app.locals.ownerIsVisitor = true;
+    }
+    
     res.render('item-details.hbs', {result})
+    
   }).catch((err) => {
     next(err)
   });
 })
 
 router.get('/items/:itemId/update', validate, (req,res,next)=>{
+  req.app.locals.ownerIsVisitor = false;
   const {itemId} = req.params
   
   ItemsModel.findById(itemId)
@@ -183,6 +189,7 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
   })
      
   router.post('/items/:itemId/delete', validate, (req, res, next)=>{
+    req.app.locals.ownerIsVisitor = false;
       const {itemId} = req.params
       ItemsModel.findByIdAndDelete(itemId)
       .then((result) => {
@@ -202,21 +209,21 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
 
 module.exports = router;
 
-router.post('/', (req, res, next)=>{
-const { search, category } = req.body
+// router.post('/', (req, res, next)=>{
+// const { search, category } = req.body
 
 
-const queryObj = {}
-if (search) queryObj.name = search // add name query to query obj only if user input a search
-if (category) queryObj.category = category // add category query to query obj if user selected a category
+// const queryObj = {}
+// if (search) queryObj.name = search // add name query to query obj only if user input a search
+// if (category) queryObj.category = category // add category query to query obj if user selected a category
 
-// for example. if user does not select category then obj will be  {category: "a category"}
+// // for example. if user does not select category then obj will be  {category: "a category"}
 
-Item.find(queryObj)
-.then((result) => {
+// Item.find(queryObj)
+// .then((result) => {
   
-}).catch((err) => {
+// }).catch((err) => {
   
-});
+// });
 
-})
+// })

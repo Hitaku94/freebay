@@ -35,5 +35,9 @@
       <li class="list-detail">Condition: {{result.condition}}</li>
     </ul>
     <p>{{result.seller.username}}</p>
+    {{#if ownerIsVisitor}}
+    <a href="/items/{{result._id}}/update">Edit</a>
+    <a href="/items/{{result._id}}/delete">Delete</a>
+    {{/if}}
   </div>
 </div>
