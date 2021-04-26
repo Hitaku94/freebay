@@ -102,6 +102,7 @@ router.get('/logout', (req, res, next) => {
 /* GET home page */
 
 router.get("/", (req, res, next) => {
+  
   ItemsModel.find()
     .populate('seller')
     .then((result) => {
@@ -113,7 +114,7 @@ router.get("/", (req, res, next) => {
 })
 
 router.post('/=?', (req, res, next) => {
-  const { title, category } = req.body
+  const { title, category, buyer } = req.body
 
   const queryObj = {}
   if (title) queryObj.title = title // add name query to query obj only if user input a search
