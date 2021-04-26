@@ -42,7 +42,9 @@ router.post('/signup', (req, res, next) => {
   const hash = bcrypt.hashSync(password, salt);
 
   UserModel.create({ username, email, password: hash })
-    .then(() => {
+    .then((result) => {
+      req.session.userInfo = result
+
       res.redirect('/')
     }).catch((err) => {
       next(err)
@@ -88,6 +90,64 @@ router.get('/logout', (req, res, next) => {
   req.app.locals.isUserLoggedIn = false
   req.session.destroy()
   res.redirect('/')
+})
+
+router.get('/deactivate', validate, (req,res,next)=>{
+    let userId = req.session.userInfo._id
+     UserModel.findByIdAndDelete(userId)
+      .then(() => {
+        req.app.locals.isUserLoggedIn = false
+        req.session.destroy()
+        res.redirect('/');        
+      })
+      .catch((err)=>next(err))
+  
+})
+
+router.get('/settings', validate, (req,res,next)=>{
+  res.render('settings.hbs');
+})
+
+
+router.post('/settings', validate, (req, res, next) => {
+  let { newuser, newemail, newpassword } = req.body
+  if(newuser ==''){
+    console.log('fuckthis')
+    newuser = req.session.userInfo.username
+  }
+  
+  if(newemail == ''){
+    console.log('fuckthistoo')
+     newemail = req.session.userInfo.email
+  }
+  
+  if(newpassword == ''){
+    console.log('fuckthistohellandback')
+    newpassword = req.session.userInfo.password
+  }
+  else{
+    const passRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    if (!passRe.test(newpassword)) {
+      res.render('settings.hbs', { msg: 'Password must be 8 characters, must have a number, and an uppercase letter' })
+      //tell node to come out of the callback code
+      return;
+    }
+        
+  }
+  
+  
+  const salt = bcrypt.genSaltSync(12);
+  const hash = bcrypt.hashSync(newpassword, salt);
+  newpassword = hash
+
+  UserModel.findByIdAndUpdate(req.session.userInfo._id,{ username: newuser, email : newemail, password: newpassword},{new: true})
+    .then((result) => {
+      req.session.destroy()
+      res.redirect('/')
+    }).catch((err) => {
+      next(err)
+    });
+
 })
 
 // Other routes
@@ -200,29 +260,16 @@ router.get('/items/:itemId/update', validate, (req,res,next)=>{
   router.get('/profile', validate, (req,res,next)=>{
       const {username} = req.session.userInfo;
       res.render('profile.hbs', {username});
-      
   })
+
+  router.post('/deactivate', validate, (req,res,next)=>{
+    const {username} = req.session.userInfo;
+    res.render('profile.hbs', {username});
+})
+
 
 
 
 
 module.exports = router;
 
-// router.post('/', (req, res, next)=>{
-// const { search, category } = req.body
-
-
-// const queryObj = {}
-// if (search) queryObj.name = search // add name query to query obj only if user input a search
-// if (category) queryObj.category = category // add category query to query obj if user selected a category
-
-// // for example. if user does not select category then obj will be  {category: "a category"}
-
-// Item.find(queryObj)
-// .then((result) => {
-  
-// }).catch((err) => {
-  
-// });
-
-// })

@@ -1,27 +1,43 @@
-<h1>Settings form</h1>
 
-<form action="/profile" method="POST">
-  <label>Current Username</label>
-  <input type="text" name="username" placeholder="Enter existing username">
 
-  <label>Current Password</label>
-  <input type="password" name="password" placeholder="Enter current Password">
+
+<div class="form-container">
+  <h2>Settings</h2>
+<form method="POST" action="/settings" class="auth-form">
+ 
+  <div class="mb-3">
+    <label class="form-label">New Username</label>
+    <input type="text" name="newuser" placeholder="Enter NEW usermane" class="form-control">
+  </div>
+
+ 
+  <div class="mb-3">
+    <label class="form-label">New E-mail</label>
+    <input type="email" name="newemail" placeholder="Enter NEW E-mail" class="form-control">
+  </div>
+
+
+  <div class="mb-3">
+    <label class="form-label">New Password</label>
+    <input type="password" name="newpassword" placeholder="Enter NEW Password" class="form-control">
+  </div>
+
+
+  <div class="button-container">
+    <button type="submit" class="btn btn-primary">Update</button>
+  </div>
+  </form>
   
-  <hr>
-  
-  <label>New Username</label>
-  <input type="text" name="newuser" placeholder="Enter NEW usermane">
-
-  <label>New E-mail</label>
-  <input type="email" name="newemail" placeholder="Enter NEW E-mail">
-
-  <label>New Password</label>
-  <input type="password" name="newpassword" placeholder="Enter NEW Password">
+  <a href="/deactivate" class="btn btn-danger">Deactivate</a>
   
 
- <button type="submit">Update</button>
-</form>
+  
 
 {{#if msg}}
  <div class="error">{{msg}}</div>
 {{/if}}
+
+</form>
+</div>
+
+
