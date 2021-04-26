@@ -24,7 +24,17 @@
 
 <div class="buy-container">
   <p>{{result.seller.username}}</p>
-  
+  <p class="price">price: <span class="result-price"> ${{result.price}}</span></p>
+  {{#if isUserBuy}}
+  <form method="POST" action="/items/{{result._id}}">
+  <button>Message</button>
+  </form>
+  {{else}}
+  <form method="POST" action="/items/{{result._id}}">
+  <button>I want it</button>
+  </form>
+  {{/if}}
+
 
 </div>
 

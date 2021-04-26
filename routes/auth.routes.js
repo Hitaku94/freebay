@@ -13,7 +13,8 @@ const { Model } = require("mongoose");
 
 const validate = (req, res, next) => {
   if (req.session.userInfo) {
-   
+    req.app.locals.isUserLoggedIn = true
+    req.app.locals.isUserBuy = false
     next()
   }
   else {
@@ -23,7 +24,7 @@ const validate = (req, res, next) => {
 
 // Auth ROUTES
 
-  /* Sign up */
+/* Sign up */
 
 router.get('/signup', (req, res, next) => {
   res.render('auth/signup.hbs')
@@ -56,7 +57,7 @@ router.post('/signup', (req, res, next) => {
 
 })
 
-    /* Login */
+/* Login */
 
 router.get('/login', (req, res, next) => {
   res.render('auth/login.hbs')
@@ -102,38 +103,38 @@ router.get('/logout', (req, res, next) => {
 
 router.get("/", (req, res, next) => {
   ItemsModel.find()
-  .populate('seller')
-  .then((result) => {
-    res.render('index', { result })
+    .populate('seller')
+    .then((result) => {
+      res.render('index', { result })
 
-  }).catch((err) => {
-    next(err)
-  });
+    }).catch((err) => {
+      next(err)
+    });
 })
 
-router.post('/=?', (req, res, next)=>{
+router.post('/=?', (req, res, next) => {
   const { title, category } = req.body
-  
+
   const queryObj = {}
   if (title) queryObj.title = title // add name query to query obj only if user input a search
   if (category) queryObj.category = category // add category query to query obj if user selected a category
-  
+
   // for example. if user does not select category then obj will be  {category: "a category"}
-  
+
   ItemsModel.find(queryObj)
-  .then((result) => {
-    res.render('index.hbs', {result})
-  }).catch((err) => {
+    .then((result) => {
+      res.render('index.hbs', { result })
+    }).catch((err) => {
       next(err)
-  });
-  
-  })
+    });
+
+})
 
 /*ITEMS*/
 router.get('/items', validate, (req, res, next) => {
 
   ItemsModel.find()
-   .populate('seller')
+    .populate('seller')
     .then((result) => {
       res.render('items-list.hbs', { result })
 
@@ -142,14 +143,14 @@ router.get('/items', validate, (req, res, next) => {
     });
 })
 
-router.get('/items/create', validate, (req,res,next)=>{
-  
+router.get('/items/create', validate, (req, res, next) => {
+
   res.render('item-create-form.hbs')
 })
 
-router.post('/items/create', validate, (req,res,next)=>{
-  const {title, category, condition, description, img, price} = req.body
-  
+router.post('/items/create', validate, (req, res, next) => {
+  const { title, category, condition, description, img, price } = req.body
+
   let seller = req.session.userInfo._id
   console.log(seller)
   if (!title || !description || !price) {
@@ -161,69 +162,85 @@ router.post('/items/create', validate, (req,res,next)=>{
       res.redirect('/items')
     })
     .catch((err) => {
-    
+
       next(err)
+    });
 });
-});
 
- 
+router.get('/items/:itemId', validate, (req, res, next) => {
+  const { buyer } = req.body
+  const { itemId } = req.params
 
-router.get('/items/:itemId',validate, (req,res,next)=>{
-
-  const {itemId} = req.params
   ItemsModel.findById(itemId)
-  .populate('seller')
-  .then((result) => {
-    console.log(result)
-    res.render('item-details.hbs', {result})
-  }).catch((err) => {
-    next(err)
-  });
-
-  
-
+    .populate('seller')
+    .then((result) => {
+      if (result.buyer) {
+        req.app.locals.isUserBuy = true
+      }
+      else {
+        req.app.locals.isUserBuy = false
+      }
+      res.render('item-details.hbs', { result })
+    }).catch((err) => {
+      next(err)
+    });
 
 })
 
-router.get('/items/:itemId/update', validate, (req,res,next)=>{
-  const {itemId} = req.params
-  
-  ItemsModel.findById(itemId)
-  .then((result) => {
-    res.render('item-edit-form.hbs', {result})
-  }).catch((err) => {
-    next(err)
-  })
+router.post('/items/:itemId', validate, (req, res, next) => {
+  const { itemId } = req.params
+  let buyer = req.session.userInfo._id
+  console.log(buyer)
+
+        ItemsModel.findByIdAndUpdate(itemId, { buyer })
+          .then((result) => {
+            res.render('messages.hbs')
+          })
+          .catch((err) => {
+            next(err)
+          });
+      
 })
 
-  router.post('/items/:itemId/update', validate, (req,res,next)=>{
-    const {itemId} = req.params 
-    const {title, category, condition, description, price} = req.body;
-    
-    ItemsModel.findByIdAndUpdate(itemId, {title, description, category, condition, price})
-    .then((result)=>{
-        res.redirect(`/profile`)
+
+router.get('/items/:itemId/update', validate, (req, res, next) => {
+  const { itemId } = req.params
+
+  ItemsModel.findById(itemId)
+    .then((result) => {
+      res.render('item-edit-form.hbs', { result })
+    }).catch((err) => {
+      next(err)
+    })
+})
+
+router.post('/items/:itemId/update', validate, (req, res, next) => {
+  const { itemId } = req.params
+  const { title, category, condition, description, price } = req.body;
+
+  ItemsModel.findByIdAndUpdate(itemId, { title, description, category, condition, price })
+    .then((result) => {
+      res.redirect(`/profile`)
     })
     .catch((err) => {
       next(err)
     })
-  })
-     
-  router.post('/items/:itemId/delete', validate, (req, res, next)=>{
-      const {itemId} = req.params
-      ItemsModel.findByIdAndDelete(itemId)
-      .then((result) => {
-        res.redirect('/profile')
-      })
-      .catch((err)=>next(err))
-  })
+})
 
-  router.get('/profile', validate, (req,res,next)=>{
-      const {username} = req.session.userInfo;
-      res.render('profile.hbs', {username});
-      
-  })
+router.post('/items/:itemId/delete', validate, (req, res, next) => {
+  const { itemId } = req.params
+  ItemsModel.findByIdAndDelete(itemId)
+    .then((result) => {
+      res.redirect('/profile')
+    })
+    .catch((err) => next(err))
+})
 
+router.get('/profile', validate, (req, res, next) => {
+  const { username } = req.session.userInfo;
+  res.render('profile.hbs', { username });
+
+})
 
 
 
