@@ -13,7 +13,7 @@ const MsgModel = require('../models/Message.model');
 const validate = (req, res, next) => {
   if (req.session.userInfo) {
     req.app.locals.isUserLoggedIn = true
-    req.app.locals.isUserBuy = false
+    
     next()
   }
   else {
@@ -99,11 +99,15 @@ router.get('/logout', (req, res, next) => {
 
 router.get('/deactivate', validate, (req,res,next)=>{
     let userId = req.session.userInfo._id    
+    
     ItemsModel.find()
     .populate('seller')
     .then((result) => {
+      console.log(result,userId)
+
       for(let i=0;i<result.length;i++){
         if(result[i].seller._id.toString() === userId.toString()){
+          console.log(result[i].seller._id,userId )
           ItemsModel.findByIdAndDelete(result[i]._id)
           .then((result)=> {
             req.session.destroy()
@@ -125,46 +129,46 @@ router.get('/settings', validate, (req,res,next)=>{
 })
 
 
-router.post('/settings', validate, (req, res, next) => {
-  let { newuser, newemail, newpassword } = req.body
-  if(newuser ==''){
-    console.log('fuckthis')
-    newuser = req.session.userInfo.username
-  }
+// router.post('/settings', validate, (req, res, next) => {
+//   let { newuser, newemail, newpassword } = req.body
+//   if(newuser ==''){
+//     console.log('fuckthis')
+//     newuser = req.session.userInfo.username
+//   }
   
-  if(newemail == ''){
-    console.log('fuckthistoo')
-     newemail = req.session.userInfo.email
-  }
+//   if(newemail == ''){
+//     console.log('fuckthistoo')
+//      newemail = req.session.userInfo.email
+//   }
   
-  if(newpassword == ''){
-    console.log('fuckthistohellandback')
-    newpassword = req.session.userInfo.password
-  }
-  else{
-    const passRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-    if (!passRe.test(newpassword)) {
-      res.render('settings.hbs', { msg: 'Password must be 8 characters, must have a number, and an uppercase letter' })
-      //tell node to come out of the callback code
-      return;
-    }
+//   if(newpassword == ''){
+//     console.log('fuckthistohellandback')
+//     newpassword = req.session.userInfo.password
+//   }
+//   else{
+//     const passRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+//     if (!passRe.test(newpassword)) {
+//       res.render('settings.hbs', { msg: 'Password must be 8 characters, must have a number, and an uppercase letter' })
+//       //tell node to come out of the callback code
+//       return;
+//     }
         
-  }
+//   }
   
   
-  const salt = bcrypt.genSaltSync(12);
-  const hash = bcrypt.hashSync(newpassword, salt);
-  newpassword = hash
+//   const salt = bcrypt.genSaltSync(12);
+//   const hash = bcrypt.hashSync(newpassword, salt);
+//   newpassword = hash
 
-  UserModel.findByIdAndUpdate(req.session.userInfo._id,{ username: newuser, email : newemail, password: newpassword},{new: true})
-    .then((result) => {
-      req.session.destroy()
-      res.redirect('/')
-    }).catch((err) => {
-      next(err)
-    });
+//   UserModel.findByIdAndUpdate(req.session.userInfo._id,{ username: newuser, email : newemail, password: newpassword},{new: true})
+//     .then((result) => {
+//       req.session.destroy()
+//       res.redirect('/')
+//     }).catch((err) => {
+//       next(err)
+//     });
 
-})
+// })
 
 // Other routes
 
@@ -236,10 +240,6 @@ router.post('/items/create', validate, (req, res, next) => {
     });
 });
 
-router.get('/items/:itemId', validate, (req, res, next) => {
-  const { buyer } = req.body
-  const { itemId } = req.params
-
 router.get('/items/:itemId',validate, (req,res,next)=>{
   req.app.locals.ownerIsVisitor = false;
   const {itemId} = req.params
@@ -251,11 +251,13 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
     if( visitor === sellerId){ 
       req.app.locals.ownerIsVisitor = true;
     }
+
     if(result.buyer){
       req.app.locals.isUserBuy = true;
+
     }else{
       req.app.locals.isUserBuy = false;
-    }
+    };
     
     res.render('item-details.hbs', {result})
     
@@ -298,7 +300,7 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
 
   ItemsModel.findByIdAndUpdate(itemId, { title, description, category, condition, price })
     .then((result) => {
-      res.redirect(`/profile`)
+      res.redirect('/profile')
     })
     .catch((err) => {
       next(err)
@@ -316,26 +318,33 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
   })
 
   router.get('/profile', validate, (req,res,next)=>{
+      
       ItemsModel.find()
       .populate('seller')
-      .then((result) => {
-        for(let i=0;i<result.length;i++){
-          if(result[i].seller._id.toString() === req.session.userInfo._id.toString()){
-            ItemsModel.findOne(result[i]._id)
-            .populate('seller')
-            .then((data)=> {
-              res.render('profile.hbs', {data});
-            })
-            .catch ((err)=> next(err))
+      .then((result) => {        
+        if(result.length >= 0){
+          for(let i=0;i<result.length;i++){
+            if(result[i].seller._id.toString() === req.session.userInfo._id.toString()){
+              ItemsModel.findOne(result[i]._id)
+              .populate('seller')
+              .then((data)=> {
+                res.render('profile.hbs', {data});
+              })
+              .catch ((err)=> next(err))
+            
           }
         }
+        }else{
+        res.render('profile.hbs');
+        }
   })
+    .catch((err)=> next(err))
   })
   
   router.post('/deactivate', validate, (req,res,next)=>{
     const {username} = req.session.userInfo;
     res.render('profile.hbs', {username});
 })
-})
+
 
 module.exports = router;
