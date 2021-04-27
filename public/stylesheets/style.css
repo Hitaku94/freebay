@@ -30,6 +30,16 @@ hr{
   margin-top: 0;
 }
 
+.div-login {
+  padding-top: 20px;
+  font-size: 10px;
+  text-align: center;
+}
+
+.a-login {
+  font-size: 15px;
+}
+
 .form-container {
   display:flex;
   justify-content: center;
