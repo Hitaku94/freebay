@@ -1,0 +1,13 @@
+
+<h1>Message by {{result.item}}</h1>
+<div>
+{{result._id}}
+
+{{result.messages.message}}
+</div>
+
+
+<form action="/messages/{{result.item}}" method="POST">
+<input type="text" name="smsarea" placeholder="Write your msg here..."></input>
+<button type="submit">Send</button>
+</form>

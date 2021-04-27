@@ -245,7 +245,14 @@ router.post('/items/:itemId', validate, (req, res, next) => {
   const { itemId } = req.params
   let buyer = req.session.userInfo._id
   ItemsModel.findByIdAndUpdate(itemId, { buyer })
-  .then((result) => res.redirect('/messages'))
+  .then((result) => {
+    MsgModel.create({item: itemId})
+    .then((result) => {
+      res.redirect(`/messages/${itemId}`)
+      
+    }).catch((err) => next(err));
+
+  })
   .catch((err) => next(err))      
 })
 
@@ -316,12 +323,39 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
 router.get('/messages', validate, (req,res,next)=>{
   const { _id, username} = req.session.userInfo
   ItemsModel.find({buyer: _id})
+  .populate('buyer')
   .then((result) => {
-
     res.render('messages.hbs', {result})
   }).catch((err) => next(err))
 })
 
+router.get('/messages/:itemId', validate, (req,res,next)=>{
+  const { itemId } = req.params
+  MsgModel.findOne({item:itemId})
+  .populate('messages.sender')
+  .then((result) => {
+    res.render(`messages-by-item.hbs`, {result})
+  })
+  .catch((err) =>next(err));
+})
 
+router.post('/messages/:itemId', validate, (req,res,next)=>{
+
+  const { itemId } = req.params;
+  const { smsarea } = req.body;
+  
+  MsgModel.findOne({item:itemId})
+  .then((result)=>{
+    console.log(result)
+    return MsgModel.findByIdAndUpdate(result,  {$push:{messages:{sender: req.session.userInfo._id, message: smsarea, timestamp:new Date()}}}, {new: true})
+  })
+  .then((result) => {
+   console.log(result)
+   res.redirect(`/messages/${itemId}`)
+  })
+  .catch((err) => {
+    next(err)
+  })
+})
 
 module.exports = router;

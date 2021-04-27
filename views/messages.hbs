@@ -1,6 +1,14 @@
 <h1>Messages Page</h1>
 <div>
   <div>
-  {{result.title}}
+    {{#each result}}
+      <a href="/messages/{{this._id}}">
+        <div>
+          {{this.title}}
+          {{this.condition}}
+          {{this.price}}
+        </div>
+      </a>
+    {{/each}}
     </div>
 </div>
