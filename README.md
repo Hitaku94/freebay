@@ -24,6 +24,7 @@ Backlog
 - Map API
 - SellerID profile
 - Rating
+- backendvalidation
 
 
 ROUTES:

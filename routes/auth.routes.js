@@ -171,7 +171,7 @@ router.post('/=?', (req, res, next) => {
 
   ItemsModel.find(queryObj)
     .then((result) => {
-      res.render('index.hbs', { rgitesult })
+      res.render('index.hbs', { result })
     }).catch((err) => {
       next(err)
     });
