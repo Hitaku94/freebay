@@ -243,16 +243,9 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
 router.post('/items/:itemId', validate, (req, res, next) => {
   const { itemId } = req.params
   let buyer = req.session.userInfo._id
-  console.log(buyer)
-
-        ItemsModel.findByIdAndUpdate(itemId, { buyer })
-          .then((result) => {
-            res.render('messages.hbs')
-          })
-          .catch((err) => {
-            next(err)
-          });
-      
+  ItemsModel.findByIdAndUpdate(itemId, { buyer })
+  .then((result) => res.redirect('/messages'))
+  .catch((err) => next(err))      
 })
 
 router.get('/items/:itemId/update', validate, (req,res,next)=>{
@@ -318,6 +311,16 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
       next(err)
     });
 })
+
+router.get('/messages', validate, (req,res,next)=>{
+  const { _id, username} = req.session.userInfo
+  ItemsModel.find({buyer: _id})
+  .then((result) => {
+
+    res.render('messages.hbs', {result})
+  }).catch((err) => next(err))
+})
+
 
 
 module.exports = router;
