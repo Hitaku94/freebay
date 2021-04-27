@@ -19,12 +19,12 @@ event attend - As a user I want to be able to attend to event so that the organi
 
 Backlog
 
-- Itempage redirect after login
-- Related items
-- Map API
-- SellerID profile
-- Rating
-- backendvalidation
+- Itempage redirect after login ()
+- Related items ()
+- Map API (X)
+- SellerID profile ()
+- Rating ()
+- back-end-validation (♠)
 
 
 ROUTES:
