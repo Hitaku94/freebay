@@ -13,6 +13,7 @@ const MsgModel = require('../models/Message.model');
 const validate = (req, res, next) => {
   if (req.session.userInfo) {
     req.app.locals.isUserLoggedIn = true
+    req.app.locals.isUserBuy = false;
     
     next()
   }
