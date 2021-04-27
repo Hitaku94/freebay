@@ -97,33 +97,6 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/')
 })
 
-router.get('/deactivate', validate, (req,res,next)=>{
-    let userId = req.session.userInfo._id    
-    
-    ItemsModel.find()
-    .populate('seller')
-    .then((result) => {
-      console.log(result,userId)
-
-      for(let i=0;i<result.length;i++){
-        if(result[i].seller._id.toString() === userId.toString()){
-          console.log(result[i].seller._id,userId )
-          ItemsModel.findByIdAndDelete(result[i]._id)
-          .then((result)=> {
-            req.session.destroy()
-            return UserModel.findByIdAndDelete(userId)
-          })
-          .then((result) => {
-            req.app.locals.isUserLoggedIn = false  
-            res.redirect('/');
-          })
-          .catch((err)=> next(err))
-        }
-      }
-    })
-    .catch ((err)=> next(err))
-})
-
 router.get('/settings', validate, (req,res,next)=>{
   res.render('settings.hbs');
 })
@@ -318,32 +291,32 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
   })
 
   router.get('/profile', validate, (req,res,next)=>{
-      
-      ItemsModel.find()
+      const {_id, username} = req.session.userInfo
+      ItemsModel.find({seller: _id})
       .populate('seller')
-      .then((result) => {        
-        if(result.length >= 0){
-          for(let i=0;i<result.length;i++){
-            if(result[i].seller._id.toString() === req.session.userInfo._id.toString()){
-              ItemsModel.findOne(result[i]._id)
-              .populate('seller')
-              .then((data)=> {
-                res.render('profile.hbs', {data});
-              })
-              .catch ((err)=> next(err))
-            
-          }
-        }
-        }else{
-        res.render('profile.hbs');
-        }
+      .then((result) => {           
+        res.render('profile.hbs', {result, username})
+      })
+      .catch((err) => next(err))
   })
+
+
+ router.post('/deactivate', validate, (req,res,next)=>{
+    let userId = req.session.userInfo._id
+    
+    ItemsModel.deleteMany({seller: userId})
+    .then((result) => {      
+      res.redirect('/')
+    })
     .catch((err)=> next(err))
-  })
-  
-  router.post('/deactivate', validate, (req,res,next)=>{
-    const {username} = req.session.userInfo;
-    res.render('profile.hbs', {username});
+    UserModel.findByIdAndDelete(userId)
+    .then((result) => {
+      req.app.locals.ownerIsVisitor = false;
+      req.session.destroy()
+      res.redirect('/')
+    }).catch((err) => {
+      next(err)
+    });
 })
 
 
