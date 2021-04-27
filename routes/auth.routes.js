@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const UserModel = require('../models/User.model')
 const ItemsModel = require('../models/Items.model')
 const MsgModel = require('../models/Message.model');
+const uploader = require('../middlewares/cloudinary.config.js');
 
 
 // Think about it!
@@ -170,7 +171,7 @@ router.get("/", (req, res, next) => {
     });
 })
 
-router.post('/=?', (req, res, next) => {
+router.post('/?', (req, res, next) => {
   const { title, category, buyer } = req.body
 
   const queryObj = {}
@@ -206,15 +207,26 @@ router.get('/items/create', validate, (req, res, next) => {
   res.render('item-create-form.hbs')
 })
 
-router.post('/items/create', validate, (req, res, next) => {
+router.post('/items/create', validate, uploader.single("imageUrl"), (req, res, next) => {
   const { title, category, condition, description, img, price } = req.body
+  // the uploader.single() callback will send the file to cloudinary and get you and obj with the url in return
+  // You will get the image url in 'req.file.path'
+  // Your code to store your url in your database should be here
+  let image;
+  console.log(req.file)
+  if (!req.file) {
+    image
+  }
+  else {
+    image = req.file.path
+  }
 
   let seller = req.session.userInfo._id
   if (!title || !description || !price) {
     res.render('item-create-form.hbs', { msg: "Please enter all field" })
     return;
   }
-  ItemsModel.create({ title, category, condition, description, img, price, seller })
+  ItemsModel.create({ title, category, condition, description, img: image, price, seller })
     .then((result) => {
       res.redirect('/items')
     })
@@ -296,6 +308,8 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
 
   router.get('/profile', validate, (req,res,next)=>{
       const {_id, username} = req.session.userInfo
+      const {id} = req.body
+      console.log(req.body)
       ItemsModel.find({seller: _id})
       .populate('seller')
       .then((result) => {           

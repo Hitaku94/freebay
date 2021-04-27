@@ -1,5 +1,5 @@
 <h1>Item create form</h1>
- <form  action="/items/create" method="POST">
+ <form  action="/items/create" method="POST"  enctype="multipart/form-data">
   <div>
   <label>Title</label>
   <input type="text" name="title" placeholder="Item title">
@@ -38,17 +38,13 @@
   </div>
   <br>
 
+  <label for="imageUrl">Add images</label>
+    <input type="file" name="imageUrl" multiple accept="image/png, image/jpg">
+    <button type="submit">Create</button>
 
-  <!-- <img src="/images/default-image.jpg" alt="item img" width="250">
-  <div><span>Add Images</span></div> -->
+</form>  
+
   <br>
-  <button type="submit">Create</button>
-  <br>
-  <hr>
-
- 
-
-
 
 {{#if msg}}
  <div class="error">{{msg}}</div>
