@@ -10,10 +10,13 @@ const MsgModel = require('../models/Message.model');
   req.app.locals.isUserLoggedIn = !!req.session.userInfo
 })*/
 
+
 const validate = (req, res, next) => {
   if (req.session.userInfo) {
     req.app.locals.isUserLoggedIn = true
     req.app.locals.isUserBuy = false;
+    req.app.locals.loginPage = false;
+    req.app.locals.signupPage = false;
     
     next()
   }
@@ -27,6 +30,8 @@ const validate = (req, res, next) => {
 /* Sign up */
 
 router.get('/signup', (req, res, next) => {
+  req.app.locals.loginPage = false;
+  req.app.locals.signupPage = true;
   res.render('auth/signup.hbs')
 })
 
@@ -61,7 +66,10 @@ router.post('/signup', (req, res, next) => {
 /* Login */
 
 router.get('/login', (req, res, next) => {
+  req.app.locals.loginPage = true;
+  req.app.locals.signupPage = false;
   res.render('auth/login.hbs')
+  
 })
 
 router.post('/login', (req, res, next) => {
@@ -149,6 +157,8 @@ router.get('/settings', validate, (req,res,next)=>{
 /* GET home page */
 
 router.get("/", (req, res, next) => {
+  req.app.locals.loginPage = true;
+  req.app.locals.signupPage = true;
   
   ItemsModel.find()
     .populate('seller')
@@ -171,7 +181,7 @@ router.post('/=?', (req, res, next) => {
 
   ItemsModel.find(queryObj)
     .then((result) => {
-      res.render('index.hbs', { rgitesult })
+      res.render('index.hbs', { result })
     }).catch((err) => {
       next(err)
     });
