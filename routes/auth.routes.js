@@ -14,6 +14,7 @@ const uploader = require('../middlewares/cloudinary.config.js');
 const validate = (req, res, next) => {
   var fullUrl = req.originalUrl;
   if (req.session.userInfo) {
+    req.app.locals.userInfoImg = req.session.userInfo.img
     req.app.locals.isUserLoggedIn = true
     req.app.locals.isUserBuy = false;
     req.app.locals.loginPage = false;
