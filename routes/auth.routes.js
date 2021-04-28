@@ -5,9 +5,6 @@ const ItemsModel = require('../models/Items.model')
 const MsgModel = require('../models/Message.model');
 const uploader = require('../middlewares/cloudinary.config.js');
 
-
-
-
 // Think about it!
 /*router.use((req, res, next) => {
   req.app.locals.isUserLoggedIn = !!req.session.userInfo
@@ -62,7 +59,7 @@ router.post('/signup', (req, res, next) => {
   UserModel.create({ username, email, password: hash })
     .then((result) => {
       req.session.userInfo = result
-      res.redirect('/')
+      res.redirect('/login')
     }).catch((err) => {
       next(err)
     });
@@ -74,7 +71,13 @@ router.post('/signup', (req, res, next) => {
 router.get('/login', (req, res, next) => {
   req.app.locals.loginPage = true;
   req.app.locals.signupPage = false;
+  console.log(req.body)
+  console.log(req.query)
+  console.log(req.session.userInfo)
+  console.log(req.session)
+  console.log(req.session.cookie.path)
   res.render('auth/login.hbs')
+  
   
 })
 
@@ -322,18 +325,47 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
       .catch((err)=>next(err))
   })
 
+  router.post('/update', validate, uploader.single("fileToUpload"), (req, res, next) => {
+    let {_id, img, username} = req.session.userInfo
+
+    // the uploader.single() callback will send the file to cloudinary and get you and obj with the url in return
+    // You will get the image url in 'req.file.path'
+    // Your code to store your url in your database should be here
+   
+    let image;
+   
+    if (!req.file) {
+      image ="/images/default-avatar.png"
+    }
+    else {
+      image = req.file.path
+    }
+
+    UserModel.findByIdAndUpdate(_id, {img: image})
+    .then((result) => {
+      req.session.userInfo.img = image
+      res.redirect("/profile")
+    })
+    .catch((err) => {
+      next(err)
+    });
+  })
+
   router.get('/profile', validate, (req,res,next)=>{
-      const {_id, username} = req.session.userInfo
+      const {_id, username, img} = req.session.userInfo
       const {id} = req.body
       console.log(req.body)
+
       ItemsModel.find({seller: _id})
       .populate('seller')
       .then((result) => {           
-        res.render('profile.hbs', {result, username})
+        res.render('profile.hbs', {result, username, img})
       })
       .catch((err) => next(err))
   })
 
+
+  
 
  router.post('/deactivate', validate, (req,res,next)=>{
     let userId = req.session.userInfo._id
