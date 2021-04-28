@@ -1,9 +1,16 @@
 
 <h1>Message by {{result.item}}</h1>
 <div>
-{{result._id}}
 
-{{result.messages.message}}
+{{result._id}}
+<div>
+  {{#each result.messages}}
+  <div>
+    {{this.message}}
+    </div>
+    {{/each}}
+</div>
+
 </div>
 
 

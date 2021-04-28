@@ -385,11 +385,13 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
 router.get('/messages', validate, (req,res,next)=>{
   const imgPic = req.session.userInfo.img
   const { _id} = req.session.userInfo
+  
   ItemsModel.find({buyer: _id})
   .populate('buyer')
   .then((result) => {
     res.render('messages.hbs', {result, imgPic})
-  }).catch((err) => next(err))
+  })
+  .catch((err) => next(err))
 })
 
 router.get('/messages/:itemId', validate, (req,res,next)=>{
