@@ -14,7 +14,6 @@ const uploader = require('../middlewares/cloudinary.config.js');
 const validate = (req, res, next) => {
   var fullUrl = req.originalUrl;
   if (req.session.userInfo) {
-    req.app.locals.userInfoImg = req.session.userInfo.img
     req.app.locals.isUserLoggedIn = true
     req.app.locals.isUserBuy = false;
     req.app.locals.loginPage = false;
@@ -165,13 +164,18 @@ router.get('/settings', validate, (req,res,next)=>{
 /* GET home page */
 
 router.get("/", (req, res, next) => {
+  let imgPic;
+  if(req.app.locals.isUserLoggedIn){
+    imgPic = req.session.userInfo.img
+  }
   req.app.locals.loginPage = true;
   req.app.locals.signupPage = true;
   
   ItemsModel.find()
     .populate('seller')
     .then((result) => {
-      res.render('index', { result })
+      
+      res.render('index', { result, imgPic})
 
     }).catch((err) => {
       next(err)
@@ -198,11 +202,12 @@ router.post('/?', (req, res, next) => {
 
 /*ITEMS*/
 router.get('/items', validate, (req, res, next) => {
+  const imgPic = req.session.userInfo.img
   req.app.locals.ownerIsVisitor = false;
   ItemsModel.find()
     .populate('seller')
     .then((result) => {
-      res.render('items-list.hbs', { result })
+      res.render('items-list.hbs', { result, imgPic })
 
     }).catch((err) => {
       next(err)
@@ -210,8 +215,9 @@ router.get('/items', validate, (req, res, next) => {
 })
 
 router.get('/items/create', validate, (req, res, next) => {
+  const imgPic = req.session.userInfo.img
 
-  res.render('item-create-form.hbs')
+  res.render('item-create-form.hbs', {imgPic})
 })
 
 router.post('/items/create', validate, uploader.single("imageUrl"), (req, res, next) => {
@@ -244,6 +250,7 @@ router.post('/items/create', validate, uploader.single("imageUrl"), (req, res, n
 });
 
 router.get('/items/:itemId',validate, (req,res,next)=>{
+  const imgPic = req.session.userInfo.img
   req.app.locals.ownerIsVisitor = false;
   const {itemId} = req.params
   let visitor = req.session.userInfo._id
@@ -262,7 +269,7 @@ router.get('/items/:itemId',validate, (req,res,next)=>{
       req.app.locals.isUserBuy = false;
     };
     
-    res.render('item-details.hbs', {result})
+    res.render('item-details.hbs', {result, imgPic})
     
   }).catch((err) => {
     next(err)
@@ -286,12 +293,13 @@ router.post('/items/:itemId', validate, (req, res, next) => {
 })
 
 router.get('/items/:itemId/update', validate, (req,res,next)=>{
+  const imgPic = req.session.userInfo.img
   req.app.locals.ownerIsVisitor = false;
   const {itemId} = req.params
   
   ItemsModel.findById(itemId)
     .then((result) => {
-      res.render('item-edit-form.hbs', { result })
+      res.render('item-edit-form.hbs', { result, imgPic})
     }).catch((err) => {
       next(err)
     })
@@ -342,14 +350,13 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
   })
 
   router.get('/profile', validate, (req,res,next)=>{
-      const {_id, username, img} = req.session.userInfo
-      const {id} = req.body
-
-
+      const imgPic = req.session.userInfo.img
+      const {_id, username} = req.session.userInfo
+      
       ItemsModel.find({seller: _id})
       .populate('seller')
       .then((result) => {           
-        res.render('profile.hbs', {result, username, img})
+        res.render('profile.hbs', {result, username, imgPic})
       })
       .catch((err) => next(err))
   })
@@ -376,20 +383,22 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
 })
 
 router.get('/messages', validate, (req,res,next)=>{
-  const { _id, username} = req.session.userInfo
+  const imgPic = req.session.userInfo.img
+  const { _id} = req.session.userInfo
   ItemsModel.find({buyer: _id})
   .populate('buyer')
   .then((result) => {
-    res.render('messages.hbs', {result})
+    res.render('messages.hbs', {result, imgPic})
   }).catch((err) => next(err))
 })
 
 router.get('/messages/:itemId', validate, (req,res,next)=>{
+  const imgPic = req.session.userInfo.img
   const { itemId } = req.params
   MsgModel.findOne({item:itemId})
   .populate('messages.sender')
   .then((result) => {
-    res.render(`messages-by-item.hbs`, {result})
+    res.render(`messages-by-item.hbs`, {result, imgPic})
   })
   .catch((err) =>next(err));
 })
