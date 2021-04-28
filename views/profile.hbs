@@ -1,14 +1,14 @@
 <div class="profile-container">
   <div class="profile-top-container">
     <div class="profile-img-container">
-      <img class="profile-img" src="{{img}}">
+      <div class="fix-size-img"><img class="profile-img" src="{{img}}"></div>
       <form class="profile-form-edit" action="/update" method="post" enctype="multipart/form-data">
-        <button class="profile-btn-update" type="submit">update</button>
+        
         <label for="fileToUpload">
-          <img class="profile-img-edit" src="../images/edit1.png" />
+          <img class="profile-img-edit" src="../images/edit1.png">
 
         </label>
-
+        <button class="profile-btn-update" type="submit">Ok</button>
         <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpg">
 
 
@@ -34,10 +34,10 @@
               {{#each result}}
               
               <div class="item-list">
-                <a href="/items/{{this._id}}"><div><img class="itemimg" src="{{this.img}}"></div>
+                <a href="/items/{{this._id}}"><div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
                   <h5>{{this.title}}</h5>
                   {{#if this.buyer}}
-                    <h6>SOLD</h6>
+                    <h6 class="sold">SOLD</h6>
                   {{else}}
                     {{this.price}}
                   {{/if}}
