@@ -266,3 +266,49 @@ img {
   line-height: 1.5;
 }
 
+/* Profile */
+
+.profile-top-container {
+  display: flex;
+  flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+  background-color: darkgoldenrod;
+
+
+}
+
+.profile-img-container {
+  padding-top: 5%;
+  position:relative;
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-end;
+	align-items: flex-end;
+}
+
+.profile-img-edit {
+  width: 50%;
+  cursor: pointer;
+
+}
+
+.profile-img {
+  border-radius: 100%;
+  width: 18rem;
+}
+
+.username-profile {
+  font-weight: 500;
+  padding: 5%
+}
+
+form input[type="file"] {
+  display: none;
+  position: absolute;
+}
+
+.profile-form-edit {
+  position: absolute;
+  }

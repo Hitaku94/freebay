@@ -1,2 +1,16 @@
-<h1>Welcome <strong>{{username}}</strong> to your profile page!</h1>
+
+<div class="profile-top-container">
+  <div class="profile-img-container">
+  <img class="profile-img" src="{{img}}">
+    <form class="profile-form-edit" action="/update" method="post" enctype="multipart/form-data">
+    <label for="fileToUpload">
+      <img class="profile-img-edit" src="../images/edit1.png" />
+      <button class="profile-btn-update" type="submit">update</button>
+    </label>
+    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpg">
+
+  </form>
+  </div>
+  <h1 class="username-profile">{{username}}</h1>
+</div>
 
