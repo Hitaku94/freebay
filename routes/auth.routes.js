@@ -114,7 +114,8 @@ router.get('/logout', (req, res, next) => {
 })
 
 router.get('/settings', validate, (req,res,next)=>{
-  res.render('settings.hbs');
+  const imgPic = req.session.userInfo.img
+  res.render('settings.hbs', {imgPic});
 })
 
 
@@ -164,10 +165,12 @@ router.get('/settings', validate, (req,res,next)=>{
 /* GET home page */
 
 router.get("/", (req, res, next) => {
+  
   let imgPic;
   if(req.app.locals.isUserLoggedIn){
-    imgPic = req.session.userInfo.img
+    imgPic = req.session.userInfo.img    
   }
+  
   req.app.locals.loginPage = true;
   req.app.locals.signupPage = true;
   
@@ -386,10 +389,11 @@ router.get('/messages', validate, (req,res,next)=>{
   const imgPic = req.session.userInfo.img
   const { _id} = req.session.userInfo
   
-  ItemsModel.find({buyer: _id})
+  ItemsModel.find({$or: [{buyer: _id}, {seller: _id, $and:[{buyer:{$exists: true}}]}]})
   .populate('buyer')
   .then((result) => {
-    res.render('messages.hbs', {result, imgPic})
+    console.log(result)
+      res.render('messages.hbs', {result, imgPic})
   })
   .catch((err) => next(err))
 })

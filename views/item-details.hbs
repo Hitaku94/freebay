@@ -21,26 +21,26 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-
-<div class="buy-container">
-  <p>{{result.seller.username}}</p>
-  {{#if result.buyer}}
-    <p class="price">price: <span class="result-price"> Sold</span></p>
-    {{else}}
-    <p class="price">price: <span class="result-price"> ${{result.price}}</span></p>
-  {{/if}}
-  {{#if isUserBuy}}
-  <form method="GET" action="/items/{{result._id}}">
-    <button>Message</button>
-  </form>
-  {{else}}
-  
-  <form method="POST" action="/items/{{result._id}}">
-  <button>I want it</button>
-  </form>
-  {{/if}}
-
-</div>
+{{#unless ownerIsVisitor}}
+  <div class="buy-container">
+    <p>{{result.seller.username}}</p>
+    {{#if result.buyer}}
+      <p class="price">price: <span class="result-price"> Sold</span></p>
+      {{else}}
+      <p class="price">price: <span class="result-price"> ${{result.price}}</span></p>
+    {{/if}}
+    
+      {{#if isUserBuy}}
+        <form method="GET" action="/items/{{result._id}}">
+        <button>Message</button>
+        </form>
+      {{else}}
+        <form method="POST" action="/items/{{result._id}}">
+        <button>I want it</button>
+        </form>
+    {{/if}}
+  </div>
+{{/unless}}
 </div>
   <div class="item-detail">
     <h2>{{result.title}}</h2>
