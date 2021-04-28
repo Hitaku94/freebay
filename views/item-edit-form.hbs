@@ -1,5 +1,6 @@
 <h1>Item edit form</h1>
 <h1>Update your item "{{result.title}}"</h1>
+<div class="item-create-container">
 
 
  <form  action="/items/{{result._id}}/update" method="POST">
@@ -53,3 +54,4 @@
 {{#if msg}}
  <div class="error">{{msg}}</div>
 {{/if}}
+</div>
