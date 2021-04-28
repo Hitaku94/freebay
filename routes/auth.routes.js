@@ -321,7 +321,6 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
 
   router.post('/update', validate, uploader.single("fileToUpload"), (req, res, next) => {
     let {_id, img, username} = req.session.userInfo
-
     let image;
    
     if (!req.file) {
