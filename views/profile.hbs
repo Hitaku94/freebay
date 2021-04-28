@@ -1,16 +1,72 @@
+<div class="profile-container">
+  <div class="profile-top-container">
+    <div class="profile-img-container">
+      <img class="profile-img" src="{{img}}">
+      <form class="profile-form-edit" action="/update" method="post" enctype="multipart/form-data">
+        <button class="profile-btn-update" type="submit">update</button>
+        <label for="fileToUpload">
+          <img class="profile-img-edit" src="../images/edit1.png" />
 
-<div class="profile-top-container">
-  <div class="profile-img-container">
-  <img class="profile-img" src="{{img}}">
-    <form class="profile-form-edit" action="/update" method="post" enctype="multipart/form-data">
-    <label for="fileToUpload">
-      <img class="profile-img-edit" src="../images/edit1.png" />
-      <button class="profile-btn-update" type="submit">update</button>
-    </label>
-    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpg">
+        </label>
 
-  </form>
+        <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpg">
+
+
+      </form>
+    </div>
+    <h1 class="username-profile">{{username}}</h1>
   </div>
-  <h1 class="username-profile">{{username}}</h1>
-</div>
 
+  <div class="profile-bottom-container">
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            My Post
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="middle-container">
+
+              {{#each result}}
+              
+              <div class="item-list">
+                <a href="/items/{{this._id}}"><img src="{{this.img}}">
+                  <h5>{{this.title}}</h5>
+                  <h6>${{this.price}}</h6>
+                  <h6>{{this.seller.username}}</h6>
+                </a>
+              </div>
+
+             
+              {{/each}}
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            My transaction
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse
+            plugin adds the appropriate classes that we use to style each element. These classes control the overall
+            appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom
+            CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
+            <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -307,8 +307,21 @@ img {
 form input[type="file"] {
   display: none;
   position: absolute;
+
 }
 
 .profile-form-edit {
+  display:flex;
+  justify-content: space-between;
   position: absolute;
+  width: 100%
   }
+  
+.profile-btn-update{
+  display: contents;
+}
+
+.profile-bottom-container{
+  width: 80%;
+  margin: auto;
+}
