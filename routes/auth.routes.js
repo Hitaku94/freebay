@@ -5,6 +5,7 @@ const ItemsModel = require('../models/Items.model')
 const MsgModel = require('../models/Message.model');
 const uploader = require('../middlewares/cloudinary.config.js');
 
+
 // Think about it!
 /*router.use((req, res, next) => {
   req.app.locals.isUserLoggedIn = !!req.session.userInfo
@@ -173,6 +174,7 @@ router.get("/", (req, res, next) => {
   
   req.app.locals.loginPage = true;
   req.app.locals.signupPage = true;
+  
   
   ItemsModel.find()
     .populate('seller')
