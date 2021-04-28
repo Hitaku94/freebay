@@ -41,11 +41,11 @@
   </div>
   <br>
 
-  <img src="/images/default-image.jpg" alt="item img" width="250">
-  <div><span>Add Images</span></div>
-  <br>
-  <button type="submit">Update Item</button>
-  <br>
+  <div>
+    <label for="imageUrl">Add Images</label>
+    <input type="file" name="imageUrl" accept="image/png, image/jpg">
+    <button type="submit">Update</button>
+  </div>
  </form>
  <form  action="/items/{{result._id}}/delete" method="POST">
  <button type="submit">Delete Item</button>
