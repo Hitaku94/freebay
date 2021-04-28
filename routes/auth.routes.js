@@ -6,6 +6,8 @@ const MsgModel = require('../models/Message.model');
 const uploader = require('../middlewares/cloudinary.config.js');
 
 
+
+
 // Think about it!
 /*router.use((req, res, next) => {
   req.app.locals.isUserLoggedIn = !!req.session.userInfo
@@ -13,15 +15,18 @@ const uploader = require('../middlewares/cloudinary.config.js');
 
 
 const validate = (req, res, next) => {
+  var fullUrl = req.originalUrl;
+  console.log(fullUrl)
   if (req.session.userInfo) {
     req.app.locals.isUserLoggedIn = true
     req.app.locals.isUserBuy = false;
     req.app.locals.loginPage = false;
     req.app.locals.signupPage = false;
-    
     next()
   }
   else {
+    req.session.futureUrl = fullUrl
+    
     res.redirect('/login')
   }
 }
@@ -86,7 +91,11 @@ router.post('/login', (req, res, next) => {
             if (passResult) {
               req.session.userInfo = result
               req.app.locals.isUserLoggedIn = true
-              res.redirect('/')
+              if(req.session.futureUrl){
+              res.redirect(`${req.session.futureUrl}`);
+              }else{
+                res.redirect('/');
+              }
             }
             else {
               res.render('auth/login.hbs', { msg: "Username or password does not match" })
