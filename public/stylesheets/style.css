@@ -14,6 +14,7 @@ body {
 
 a {
   color: #00b7ff;
+  text-decoration: none;
 }
 
 h4 {
@@ -91,11 +92,25 @@ hr{
 }
 
 .img-nav {
-  width: 60%;
+border-radius: 100%;
+display:block;
+height:inherit;
+width: inherit;
+
 }
 
 img {
   width: 200px;
+}
+
+.img-nav-container{
+  width: 3em;
+  height: 3em;
+}
+
+.profile-pic-link{
+  display:flex;
+  align-items: center;
 }
 
 .item-list {
@@ -111,11 +126,7 @@ img {
 
 }
 
-.itemimg{
-  
-  max-width: auto;  
 
-}
 
 .item-container {
   display: inline-flex;
@@ -191,6 +202,15 @@ img {
 	align-items: center;
 	align-content: center;
   width: 100%
+}
+
+/* item create */
+
+.item-create-container {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+	align-content: center;
 }
 
 /* */
@@ -293,6 +313,11 @@ img {
 	align-items: flex-end;
 }
 
+.fix-size-img {
+width: 15rem;
+height: 15rem;
+}
+
 .profile-img-edit {
   width: 50%;
   cursor: pointer;
@@ -301,7 +326,10 @@ img {
 
 .profile-img {
   border-radius: 100%;
-  width: 18rem;
+display:block;
+height:inherit;
+width: inherit;
+
 }
 
 .username-profile {
@@ -317,7 +345,7 @@ form input[id="fileToUpload"] {
 
 .profile-form-edit {
   display:flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   position: absolute;
   width: 100%
   }
@@ -333,7 +361,22 @@ form input[id="fileToUpload"] {
   margin: auto;
 }
 
+.item-img-container{
+  display:block;
+  width: 10rem;
+  height: 10rem;
+}
 
+.itemimg{
+  
+  width:inherit;
+  height:inherit
+
+}
+
+.sold {
+  color: red;
+}
 
 /*Not found*/
 
