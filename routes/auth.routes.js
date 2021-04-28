@@ -13,7 +13,6 @@ const uploader = require('../middlewares/cloudinary.config.js');
 
 const validate = (req, res, next) => {
   var fullUrl = req.originalUrl;
-  console.log(fullUrl)
   if (req.session.userInfo) {
     req.app.locals.isUserLoggedIn = true
     req.app.locals.isUserBuy = false;
@@ -71,11 +70,6 @@ router.post('/signup', (req, res, next) => {
 router.get('/login', (req, res, next) => {
   req.app.locals.loginPage = true;
   req.app.locals.signupPage = false;
-  console.log(req.body)
-  console.log(req.query)
-  console.log(req.session.userInfo)
-  console.log(req.session)
-  console.log(req.session.cookie.path)
   res.render('auth/login.hbs')
   
   
@@ -225,7 +219,7 @@ router.post('/items/create', validate, uploader.single("imageUrl"), (req, res, n
   // You will get the image url in 'req.file.path'
   // Your code to store your url in your database should be here
   let image;
-  console.log(req.file)
+  
   if (!req.file) {
     image
   }
@@ -315,8 +309,8 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
     })
   })
      
-  router.post('/items/:itemId/delete', validate, (req, res, next)=>{
-    req.app.locals.ownerIsVisitor = false;
+  router.get('/items/:itemId/delete', validate, (req, res, next)=>{
+      req.app.locals.ownerIsVisitor = false;
       const {itemId} = req.params
       ItemsModel.findByIdAndDelete(itemId)
       .then((result) => {
@@ -328,10 +322,6 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
   router.post('/update', validate, uploader.single("fileToUpload"), (req, res, next) => {
     let {_id, img, username} = req.session.userInfo
 
-    // the uploader.single() callback will send the file to cloudinary and get you and obj with the url in return
-    // You will get the image url in 'req.file.path'
-    // Your code to store your url in your database should be here
-   
     let image;
    
     if (!req.file) {
@@ -354,7 +344,7 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
   router.get('/profile', validate, (req,res,next)=>{
       const {_id, username, img} = req.session.userInfo
       const {id} = req.body
-      console.log(req.body)
+
 
       ItemsModel.find({seller: _id})
       .populate('seller')
@@ -411,11 +401,11 @@ router.post('/messages/:itemId', validate, (req,res,next)=>{
   
   MsgModel.findOne({item:itemId})
   .then((result)=>{
-    console.log(result)
+    
     return MsgModel.findByIdAndUpdate(result,  {$push:{messages:{sender: req.session.userInfo._id, message: smsarea, timestamp:new Date()}}}, {new: true})
   })
   .then((result) => {
-   console.log(result)
+   
    res.redirect(`/messages/${itemId}`)
   })
   .catch((err) => {

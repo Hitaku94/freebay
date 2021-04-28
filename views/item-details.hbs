@@ -24,24 +24,32 @@
 
 <div class="buy-container">
   <p>{{result.seller.username}}</p>
-  <p class="price">price: <span class="result-price"> ${{result.price}}</span></p>
+  {{#if result.buyer}}
+    <p class="price">price: <span class="result-price"> Sold</span></p>
+    {{else}}
+    <p class="price">price: <span class="result-price"> ${{result.price}}</span></p>
+  {{/if}}
   {{#if isUserBuy}}
   <form method="GET" action="/items/{{result._id}}">
-  <button>Message</button>
+    <button>Message</button>
   </form>
   {{else}}
+  
   <form method="POST" action="/items/{{result._id}}">
   <button>I want it</button>
   </form>
   {{/if}}
-
 
 </div>
 </div>
   <div class="item-detail">
     <h2>{{result.title}}</h2>
     <hr>
+    {{#if result.buyer}}
+    <p class="price">price: <span class="result-price"> Sold</span></p>
+    {{else}}
     <p class="price">price: <span class="result-price"> ${{result.price}}</span></p>
+    {{/if}}
     <h4>About this item:</h4>
     <div class="text-box">
     <p>{{result.description}}</p>
