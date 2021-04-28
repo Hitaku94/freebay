@@ -345,7 +345,7 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
 
   router.get('/profile', validate, (req,res,next)=>{
       const {_id, username, img} = req.session.userInfo
-      const {id} = req.body
+      
 
 
       ItemsModel.find({seller: _id})
