@@ -70,7 +70,7 @@ router.post('/signup', (req, res, next) => {
     })
     .then((result) => {
       req.session.userInfo = result
-      res.redirect('/login')
+      res.redirect('/')
     }).catch((err) => {
       next(err)
     });
@@ -175,8 +175,6 @@ router.post('/settings', validate, (req, res, next) => {
 
    UserModel.findByIdAndUpdate(req.session.userInfo._id,{ username: newuser, email : newemail, password: newpassword},{new: true})
      .then((result) => {
-       console.log(result)
-      
        res.redirect('/')
      }).catch((err) => {
        next(err)
