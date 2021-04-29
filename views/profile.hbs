@@ -23,7 +23,7 @@
         <h2 class="accordion-header" id="headingOne">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
             aria-expanded="true" aria-controls="collapseOne">
-            My Post
+            My Items for sale
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
@@ -31,22 +31,21 @@
           <div class="accordion-body">
             <div class="middle-container">
 
-              {{#each result}}
+              {{#each sellerIs}}
               
-              <div class="item-list">
-                <a href="/items/{{this._id}}"><div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
-                  <h5>{{this.title}}</h5>
-                  {{#if this.buyer}}
-                    <h6 class="sold">SOLD</h6>
-                  {{else}}
-                    {{this.price}}
-                  {{/if}}
-                  <h6>{{this.seller.username}}</h6>
-                </a>
+                <div class="item-list">
+                  <a href="/items/{{this._id}}"><div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
+                    <h5>{{this.title}}</h5>
+                    {{#if this.buyer}}
+                      <h6 class="sold">SOLD</h6>
+                    {{else}}
+                      {{this.price}}
+                    {{/if}}
+                    <h6>{{this.seller.username}}</h6>
+                  </a>
                 
               </div>
-
-             
+           
               {{/each}}
 
             </div>
@@ -58,17 +57,24 @@
         <h2 class="accordion-header" id="headingTwo">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            My transaction
+            My buying history
           </button>
         </h2>
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
           data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse
-            plugin adds the appropriate classes that we use to style each element. These classes control the overall
-            appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom
-            CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
-            <code>.accordion-body</code>, though the transition does limit overflow.
+            
+            {{#each buyerIs}}
+              <div class="item-list">
+                  <a href="/items/{{this._id}}"><div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
+                    <h5>{{this.title}}</h5>
+                    <h5>{{this.price}}</h5>
+                    <h6>{{this.seller.username}}</h6>
+                  </a>  
+              </div>
+            {{/each}}
+
+
           </div>
         </div>
       </div>
