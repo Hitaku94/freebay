@@ -3,6 +3,8 @@
 html, body
 {
     height: 100%;
+    
+    
 }
 
 body {
@@ -10,6 +12,8 @@ body {
   margin: 0;
   box-sizing: border-box;
   background-color: #EEE2DC;
+  min-height: 100%;
+  
 }
 
 
@@ -125,7 +129,6 @@ img {
 .item-list {
   display: flex;
   justify-content: center;
-  flex-direction: column;
   text-align: start;
   padding-bottom: 20px;
   padding-left: 10px;
@@ -271,11 +274,11 @@ img {
 }
 
 .footer-container-down {
-  display:flex;
-  align-items: center;
-  justify-content: center;
+   bottom: 0;
+  left: 0;
+  text-align: center;
+  padding: 1rem;
   background-color: #BAB2B5;
-  height: 50px;
   color: black;
   bottom: 0;
   width: 100%;
