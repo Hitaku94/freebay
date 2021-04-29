@@ -1,27 +1,27 @@
 <div class="item-detail-img">
 <!--<div class="item-detail-upper-container">-->
 <div class="item-detail-img-container"><img class="itemimg" src="{{result.img}}"></div>
-{{#unless ownerIsVisitor}}
-  <div class="buy-container">
-    <p>{{result.seller.username}}</p>
-    {{#if result.buyer}}
-      <p class="price">price: <span class="result-price"> Sold</span></p>
-      {{else}}
-      <p class="price">price: <span class="result-price"> ${{result.price}}</span></p>
-    {{/if}}
-    
-      {{#if isUserBuy}}
-        <form method="GET" action="/items/{{result._id}}">
-        <button>Message</button>
-        </form>
-      {{else}}
-        <form method="POST" action="/items/{{result._id}}">
-        <button>I want it</button>
-        </form>
-    {{/if}}
-  </div>
-{{/unless}}
-<!--</div>-->
+  {{#unless ownerIsVisitor}}
+    <div class="buy-container">
+      <p>{{result.seller.username}}</p>
+      {{#if result.buyer}}
+        <p class="price">price: <span class="result-price"> Sold</span></p>
+        {{else}}
+        <p class="price">price: <span class="result-price"> ${{result.price}}</span></p>
+      {{/if}}
+      
+        {{#if isUserBuy}}
+          <form method="GET" action="/items/{{result._id}}">
+          <button>Message</button>
+          </form>
+        {{else}}
+          <form method="POST" action="/items/{{result._id}}">
+          <button>I want it</button>
+          </form>
+      {{/if}}
+    </div>
+  {{/unless}}
+
   <div class="item-detail">
     <h2>{{result.title}}</h2>
     <hr>
@@ -32,16 +32,19 @@
     {{/if}}
     <h4>About this item:</h4>
     <div class="text-box">
-    <p>{{result.description}}</p>
+      <p>{{result.description}}</p>
     </div>
     <ul>
       <li class="list-detail">Category: {{result.category}}</li>
       <li class="list-detail">Condition: {{result.condition}}</li>
     </ul>
-    <p>{{result.seller.username}}</p>
-    {{#if ownerIsVisitor}}
-      <a href="/items/{{result._id}}/update">Edit</a>
-      <a href="/items/{{result._id}}/delete">Delete</a>
-    {{/if}}
+    <div id="edit-delete-btns">
+      {{#if ownerIsVisitor}}
+        <a href="/items/{{result._id}}/update" class="btn btn btn-warning">Edit</a>
+        <a href="/items/{{result._id}}/delete" class="btn btn btn-danger">Delete</a>
+      {{/if}}
+    </div>
   </div>
 </div>
+
+<button type="button" id="edit-test">Edit</button>

@@ -1,4 +1,4 @@
-<h1>Item create form</h1>
+<h1 id="item-create-title">Item create form</h1>
 <div class="item-create-container">
 
  <form action="/items/create" method="POST" enctype="multipart/form-data">
@@ -26,11 +26,11 @@
   <input type="radio" name="condition" id="used" value="used">
   <label for="used">Used</label>
   </div>
-  <br><br><br>
+  <br><br>
   <div>
     <label>Price</label>
     <input type="text" name="price" placeholder="Item price">
-    <br><br><br>
+    <br><br>
   </div>
 <br>  
  
@@ -42,7 +42,11 @@
   <div>
     <label for="imageUrl">Add Images</label>
     <input type="file" name="imageUrl" accept="image/png, image/jpg">
-    <button type="submit">Create</button>
+    <br>
+    <br>
+    <div>
+    <button type="submit" id="item-create-btn" class="btn btn btn-primary">Create</button>
+    </div>
   </div>
 </form>  
 

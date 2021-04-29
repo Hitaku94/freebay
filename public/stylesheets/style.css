@@ -146,8 +146,6 @@ img {
 	align-content: center;
   padding-left: 30px;
   padding-right: 30px;
-  
- 
 }
 
 /* item detail page*/
@@ -227,8 +225,22 @@ img {
 .item-create-container {
   display: flex;
   justify-content:center;
+  flex-direction: column;
   align-items: center;
-	align-content: center;
+
+}
+
+#item-create-title{
+  text-align: center;
+}
+
+#item-create-btn{
+  display: flex;
+  margin-bottom: 10px;
+}
+#edit-delete-btns{
+
+  width:100%
 }
 
 /* */
@@ -457,6 +469,24 @@ form input[id="fileToUpload"] {
   border-color: #123C69;
   background-color: #123C69;
   }
+
+.btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .open>.dropdown-toggle.btn-warning {
+    color: rgba(255, 255, 255, 0.680);
+    background-color: #EDC7B7;
+    border-color: #EDC7B7;
+}
+.btn-warning{
+  color:rgba(0, 0, 0, 0.7);
+  border-color: #e6b49e;
+  background-color: #EDC7B7;
+}
+
+.btn-danger{
+  border-color: #AC3B61;
+  background-color: #AC3B61;
+}
+    
+  
 
 /*Not found*/
 
