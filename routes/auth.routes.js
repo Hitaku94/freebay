@@ -144,18 +144,15 @@ router.get('/settings', validate, (req, res, next) => {
 
 router.post('/settings', validate, (req, res, next) => {
    let { newuser, newemail, newpassword } = req.body
-   if(newuser ==''){
-     console.log('fuckthis')
+   if(newuser =='') {
      newuser = req.session.userInfo.username
    }
 
    if(newemail == ''){
-     console.log('fuckthistoo')
       newemail = req.session.userInfo.email
    }
 
    if(newpassword == ''){
-     console.log('fuckthistohellandback')
      newpassword = req.session.userInfo.password
    }
    else{
@@ -165,13 +162,10 @@ router.post('/settings', validate, (req, res, next) => {
        //tell node to come out of the callback code
        return;
      }
-
+     const salt = bcrypt.genSaltSync(12);
+     const hash = bcrypt.hashSync(newpassword, salt);
+     newpassword = hash
    }
-
-
-   const salt = bcrypt.genSaltSync(12);
-   const hash = bcrypt.hashSync(newpassword, salt);
-   newpassword = hash
 
    UserModel.findByIdAndUpdate(req.session.userInfo._id,{ username: newuser, email : newemail, password: newpassword},{new: true})
      .then((result) => {
