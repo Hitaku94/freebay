@@ -210,7 +210,7 @@ router.get("/", (req, res, next) => {
     });
 })
 
-router.post('/?', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const {
     title,
     category,
