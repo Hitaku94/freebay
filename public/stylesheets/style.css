@@ -253,7 +253,6 @@ img {
 
 .middle-container {
   background-color: #EEE2DC;
-  margin-bottom: 8rem
 }
 
 .container {
@@ -282,6 +281,7 @@ img {
   color: black;
   bottom: 0;
   width: 100%;
+ 
 }
 
 /* search bar */
@@ -330,7 +330,7 @@ img {
 	justify-content: center;
 	align-items: center;
 	align-content: center;
-  background-color: darkgoldenrod;
+  background-color: #EEE2DC;
 
 
 }
@@ -365,7 +365,8 @@ width: inherit;
 
 .username-profile {
   font-weight: 500;
-  padding: 5%
+  padding: 5%;
+  color:#AC3B61;
 }
 
 form input[id="fileToUpload"] {
@@ -388,8 +389,12 @@ form input[id="fileToUpload"] {
 }
 
 .profile-bottom-container{
-  width: 80%;
-  margin: auto;
+  padding: 0 10% 0 10%;
+  background-color:#EDC7B7;
+}
+
+.accordion-item {
+  background-color: #123C69;
 }
 
 .item-img-container{
