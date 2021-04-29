@@ -187,7 +187,7 @@ router.post('/settings', validate, (req, res, next) => {
 // Other routes
 
 /* GET home page */
-
+ 
 router.get("/", (req, res, next) => {
   req.app.locals.isUserLoggedIn = !!req.session.userInfo;  
   let imgPic;

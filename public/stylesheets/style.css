@@ -442,13 +442,20 @@ form input[id="fileToUpload"] {
 }
 
 .msgsbox {
+  
   display: flex;
   justify-content: center;
   width: 100%
 }
 
 .indmsgbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 300px;
   width: 40%;
+  position: relative;
+  bottom: 0;
   overflow-y: auto;
   max-height: 300px;
 }
@@ -491,7 +498,7 @@ form input[id="fileToUpload"] {
 
 .a-msg-container {
   text-align: center;
-  margin-top: 50px;
+  margin-top: 25px;
   font-size: x-large;
 }
 
