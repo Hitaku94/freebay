@@ -11,20 +11,16 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-    password: {
+  password: {
     type: String,
     required: true,
   },
   img: {
     type: String,
-    default: '/images/default-avatar.png',
+    default: "/images/default-avatar.png",
   },
-
 });
-
 
 const User = model("User", userSchema);
 
 module.exports = User;
-
-

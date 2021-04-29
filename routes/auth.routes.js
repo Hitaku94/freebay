@@ -20,10 +20,9 @@ const validate = (req, res, next) => {
     req.app.locals.loginPage = false;
     req.app.locals.signupPage = false;
     next()
-  }
-  else {
+  } else {
     req.session.futureUrl = fullUrl
-    
+
     res.redirect('/login')
   }
 }
@@ -39,16 +38,24 @@ router.get('/signup', (req, res, next) => {
 })
 
 router.post('/signup', (req, res, next) => {
-  const { username, email, password } = req.body
+  const {
+    username,
+    email,
+    password
+  } = req.body
 
   if (!username || !email || !password) {
-    res.render('auth/signup.hbs', { msg: "Please enter all field" })
+    res.render('auth/signup.hbs', {
+      msg: "Please enter all field"
+    })
     return;
   }
 
   const passRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
   if (!passRe.test(password)) {
-    res.render('auth/signup.hbs', { msg: 'Password must be 8 characters, must have a number, and an uppercase letter' })
+    res.render('auth/signup.hbs', {
+      msg: 'Password must be 8 characters, must have a number, and an uppercase letter'
+    })
     //tell node to come out of the callback code
     return;
   }
@@ -56,7 +63,11 @@ router.post('/signup', (req, res, next) => {
   const salt = bcrypt.genSaltSync(12);
   const hash = bcrypt.hashSync(password, salt);
 
-  UserModel.create({ username, email, password: hash })
+  UserModel.create({
+      username,
+      email,
+      password: hash
+    })
     .then((result) => {
       req.session.userInfo = result
       res.redirect('/login')
@@ -72,31 +83,38 @@ router.get('/login', (req, res, next) => {
   req.app.locals.loginPage = true;
   req.app.locals.signupPage = false;
   res.render('auth/login.hbs')
-  
-  
+
+
 })
 
 router.post('/login', (req, res, next) => {
-  const { username, password } = req.body
-  UserModel.findOne({ username })
+  const {
+    username,
+    password
+  } = req.body
+  UserModel.findOne({
+      username
+    })
     .then((result) => {
       if (!result) {
-        res.render('auth/login.hbs', { msg: "Username or password does not match" })
-      }
-      else {
+        res.render('auth/login.hbs', {
+          msg: "Username or password does not match"
+        })
+      } else {
         bcrypt.compare(password, result.password)
           .then((passResult) => {
             if (passResult) {
               req.session.userInfo = result
               req.app.locals.isUserLoggedIn = true
-              if(req.session.futureUrl){
-              res.redirect(`${req.session.futureUrl}`);
-              }else{
+              if (req.session.futureUrl) {
+                res.redirect(`${req.session.futureUrl}`);
+              } else {
                 res.redirect('/');
               }
-            }
-            else {
-              res.render('auth/login.hbs', { msg: "Username or password does not match" })
+            } else {
+              res.render('auth/login.hbs', {
+                msg: "Username or password does not match"
+              })
             }
           })
       }
@@ -114,9 +132,11 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/')
 })
 
-router.get('/settings', validate, (req,res,next)=>{
+router.get('/settings', validate, (req, res, next) => {
   const imgPic = req.session.userInfo.img
-  res.render('settings.hbs', {imgPic});
+  res.render('settings.hbs', {
+    imgPic
+  });
 })
 
 
@@ -126,12 +146,12 @@ router.get('/settings', validate, (req,res,next)=>{
 //     console.log('fuckthis')
 //     newuser = req.session.userInfo.username
 //   }
-  
+
 //   if(newemail == ''){
 //     console.log('fuckthistoo')
 //      newemail = req.session.userInfo.email
 //   }
-  
+
 //   if(newpassword == ''){
 //     console.log('fuckthistohellandback')
 //     newpassword = req.session.userInfo.password
@@ -143,10 +163,10 @@ router.get('/settings', validate, (req,res,next)=>{
 //       //tell node to come out of the callback code
 //       return;
 //     }
-        
+
 //   }
-  
-  
+
+
 //   const salt = bcrypt.genSaltSync(12);
 //   const hash = bcrypt.hashSync(newpassword, salt);
 //   newpassword = hash
@@ -166,21 +186,24 @@ router.get('/settings', validate, (req,res,next)=>{
 /* GET home page */
 
 router.get("/", (req, res, next) => {
-  
+
   let imgPic;
-  if(req.app.locals.isUserLoggedIn){
-    imgPic = req.session.userInfo.img    
+  if (req.app.locals.isUserLoggedIn) {
+    imgPic = req.session.userInfo.img
   }
-  
+
   req.app.locals.loginPage = true;
   req.app.locals.signupPage = true;
-  
-  
+
+
   ItemsModel.find()
     .populate('seller')
     .then((result) => {
-      
-      res.render('index', { result, imgPic})
+
+      res.render('index', {
+        result,
+        imgPic
+      })
 
     }).catch((err) => {
       next(err)
@@ -188,7 +211,11 @@ router.get("/", (req, res, next) => {
 })
 
 router.post('/?', (req, res, next) => {
-  const { title, category, buyer } = req.body
+  const {
+    title,
+    category,
+    buyer
+  } = req.body
 
   const queryObj = {}
   if (title) queryObj.title = title // add name query to query obj only if user input a search
@@ -198,7 +225,9 @@ router.post('/?', (req, res, next) => {
 
   ItemsModel.find(queryObj)
     .then((result) => {
-      res.render('index.hbs', { result })
+      res.render('index.hbs', {
+        result
+      })
     }).catch((err) => {
       next(err)
     });
@@ -212,7 +241,10 @@ router.get('/items', validate, (req, res, next) => {
   ItemsModel.find()
     .populate('seller')
     .then((result) => {
-      res.render('items-list.hbs', { result, imgPic })
+      res.render('items-list.hbs', {
+        result,
+        imgPic
+      })
 
     }).catch((err) => {
       next(err)
@@ -222,129 +254,183 @@ router.get('/items', validate, (req, res, next) => {
 router.get('/items/create', validate, (req, res, next) => {
   const imgPic = req.session.userInfo.img
 
-  res.render('item-create-form.hbs', {imgPic})
+  res.render('item-create-form.hbs', {
+    imgPic
+  })
 })
 
 router.post('/items/create', validate, uploader.single("imageUrl"), (req, res, next) => {
-  const { title, category, condition, description, img, price } = req.body
+  const {
+    title,
+    category,
+    condition,
+    description,
+    img,
+    price
+  } = req.body
   // the uploader.single() callback will send the file to cloudinary and get you and obj with the url in return
   // You will get the image url in 'req.file.path'
   // Your code to store your url in your database should be here
   let image;
-  
+
   if (!req.file) {
     image
-  }
-  else {
+  } else {
     image = req.file.path
   }
 
   let seller = req.session.userInfo._id
   if (!title || !description || !price) {
-    res.render('item-create-form.hbs', { msg: "Please enter all field" })
+    res.render('item-create-form.hbs', {
+      msg: "Please enter all field"
+    })
     return;
   }
-  ItemsModel.create({ title, category, condition, description, img: image, price, seller })
+  ItemsModel.create({
+      title,
+      category,
+      condition,
+      description,
+      img: image,
+      price,
+      seller
+    })
     .then((result) => {
       res.redirect('/items')
     })
     .catch((err) => {
-
       next(err)
     });
 });
 
-router.get('/items/:itemId',validate, (req,res,next)=>{
+router.get('/items/:itemId', validate, (req, res, next) => {
   const imgPic = req.session.userInfo.img
   req.app.locals.ownerIsVisitor = false;
-  const {itemId} = req.params
+  const {
+    itemId
+  } = req.params
   let visitor = req.session.userInfo._id
   ItemsModel.findById(itemId)
-  .populate('seller')
-  .then((result) => {
-    let sellerId = result.seller._id.toString()
-    if( visitor === sellerId){ 
-      req.app.locals.ownerIsVisitor = true;
-    }
+    .populate('seller')
+    .then((result) => {
+      let sellerId = result.seller._id.toString()
+      if (visitor === sellerId) {
+        req.app.locals.ownerIsVisitor = true;
+      }
 
-    if(result.buyer){
-      req.app.locals.isUserBuy = true;
+      if (result.buyer) {
+        req.app.locals.isUserBuy = true;
 
-    }else{
-      req.app.locals.isUserBuy = false;
-    };
-    
-    res.render('item-details.hbs', {result, imgPic})
-    
-  }).catch((err) => {
-    next(err)
-  });
+      } else {
+        req.app.locals.isUserBuy = false;
+      };
+
+      res.render('item-details.hbs', {
+        result,
+        imgPic
+      })
+
+    }).catch((err) => {
+      next(err)
+    });
 
 })
 
 router.post('/items/:itemId', validate, (req, res, next) => {
-  const { itemId } = req.params
+  const {
+    itemId
+  } = req.params
   let buyer = req.session.userInfo._id
-  ItemsModel.findByIdAndUpdate(itemId, { buyer })
-  .then((result) => {
-    MsgModel.create({item: itemId})
+  ItemsModel.findByIdAndUpdate(itemId, {
+      buyer
+    })
     .then((result) => {
-      res.redirect(`/messages/${itemId}`)
-      
-    }).catch((err) => next(err));
+      MsgModel.create({
+          item: itemId
+        })
+        .then((result) => {
+          res.redirect(`/messages/${itemId}`)
 
-  })
-  .catch((err) => next(err))      
+        }).catch((err) => next(err));
+
+    })
+    .catch((err) => next(err))
 })
 
-router.get('/items/:itemId/update', validate, (req,res,next)=>{
+router.get('/items/:itemId/update', validate, (req, res, next) => {
   const imgPic = req.session.userInfo.img
   req.app.locals.ownerIsVisitor = false;
-  const {itemId} = req.params
-  
+  const {
+    itemId
+  } = req.params
+
   ItemsModel.findById(itemId)
     .then((result) => {
-      res.render('item-edit-form.hbs', { result, imgPic})
+      res.render('item-edit-form.hbs', {
+        result,
+        imgPic
+      })
     }).catch((err) => {
       next(err)
     })
 })
 
 router.post('/items/:itemId/update', validate, (req, res, next) => {
-  const { itemId } = req.params
-  const { title, category, condition, description, price } = req.body;
+  const {
+    itemId
+  } = req.params
+  const {
+    title,
+    category,
+    condition,
+    description,
+    price
+  } = req.body;
 
-  ItemsModel.findByIdAndUpdate(itemId, { title, description, category, condition, price })
+  ItemsModel.findByIdAndUpdate(itemId, {
+      title,
+      description,
+      category,
+      condition,
+      price
+    })
     .then((result) => {
       res.redirect('/profile')
     })
     .catch((err) => {
       next(err)
     })
-  })
-     
-  router.get('/items/:itemId/delete', validate, (req, res, next)=>{
-      req.app.locals.ownerIsVisitor = false;
-      const {itemId} = req.params
-      ItemsModel.findByIdAndDelete(itemId)
-      .then((result) => {
-        res.redirect('/profile')
-      })
-      .catch((err)=>next(err))
-  })
+})
 
-  router.post('/update', validate, uploader.single("fileToUpload"), (req, res, next) => {
-    let {_id, img, username} = req.session.userInfo
-    let image;
-   
-    if (!req.file) {
-      image ="/images/default-avatar.png"
-    }
-    else {
-      image = req.file.path
-    }
+router.get('/items/:itemId/delete', validate, (req, res, next) => {
+  req.app.locals.ownerIsVisitor = false;
+  const {
+    itemId
+  } = req.params
+  ItemsModel.findByIdAndDelete(itemId)
+    .then((result) => {
+      res.redirect('/profile')
+    })
+    .catch((err) => next(err))
+})
 
-    UserModel.findByIdAndUpdate(_id, {img: image})
+router.post('/update', validate, uploader.single("fileToUpload"), (req, res, next) => {
+  let {
+    _id,
+    img,
+    username
+  } = req.session.userInfo
+  let image;
+
+  if (!req.file) {
+    image = "/images/default-avatar.png"
+  } else {
+    image = req.file.path
+  }
+
+  UserModel.findByIdAndUpdate(_id, {
+      img: image
+    })
     .then((result) => {
       req.session.userInfo.img = image
       res.redirect("/profile")
@@ -352,39 +438,55 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
     .catch((err) => {
       next(err)
     });
-  })
+})
 
-  router.get('/profile', validate, (req,res,next)=>{
-      const imgPic = req.session.userInfo.img
-      const {_id, username} = req.session.userInfo
-      
-      ItemsModel.find({$or : [{buyer: _id}, {seller: _id}]})
-      .populate('seller')
-      .populate('buyer')
-      .then((result) => {
-        let sellerIs = result.filter(e=>{
-          return e.seller._id == _id
-        });
-        let buyerIs = result.filter(e=>{
-          return e.buyer?._id == _id
-        })                   
-        res.render('profile.hbs', {buyerIs, sellerIs, username, imgPic})
+router.get('/profile', validate, (req, res, next) => {
+  const imgPic = req.session.userInfo.img
+  const {
+    _id,
+    username
+  } = req.session.userInfo
+
+  ItemsModel.find({
+      $or: [{
+        buyer: _id
+      }, {
+        seller: _id
+      }]
+    })
+    .populate('seller')
+    .populate('buyer')
+    .then((result) => {
+      let sellerIs = result.filter(e => {
+        return e.seller._id == _id
+      });
+      let buyerIs = result.filter(e => {
+        return e.buyer ?._id == _id
       })
-      .catch((err) => next(err))
-  })
+      res.render('profile.hbs', {
+        buyerIs,
+        sellerIs,
+        username,
+        imgPic
+      })
+    })
+    .catch((err) => next(err))
+})
 
 
-  
 
- router.post('/deactivate', validate, (req,res,next)=>{
-    let userId = req.session.userInfo._id
-    
-    ItemsModel.deleteMany({seller: userId})
-    .then((result) => {      
+
+router.post('/deactivate', validate, (req, res, next) => {
+  let userId = req.session.userInfo._id
+
+  ItemsModel.deleteMany({
+      seller: userId
+    })
+    .then((result) => {
       res.redirect('/')
     })
-    .catch((err)=> next(err))
-    UserModel.findByIdAndDelete(userId)
+    .catch((err) => next(err))
+  UserModel.findByIdAndDelete(userId)
     .then((result) => {
       req.app.locals.ownerIsVisitor = false;
       req.session.destroy()
@@ -394,55 +496,94 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
     });
 })
 
-router.get('/messages', validate, (req,res,next)=>{
+router.get('/messages', validate, (req, res, next) => {
   const imgPic = req.session.userInfo.img
-  const { _id} = req.session.userInfo
-  
-  ItemsModel.find({$or: [{buyer: _id}, {seller: _id, $and:[{buyer:{$exists: true}}]}]})
-  .populate('buyer')
-  .then((result) => {
-    console.log(result)
-      res.render('messages.hbs', {result, imgPic})
-  })
-  .catch((err) => next(err))
+  const {
+    _id
+  } = req.session.userInfo
+
+  ItemsModel.find({
+      $or: [{
+        buyer: _id
+      }, {
+        seller: _id,
+        $and: [{
+          buyer: {
+            $exists: true
+          }
+        }]
+      }]
+    })
+    .populate('buyer')
+    .then((result) => {
+      console.log(result)
+      res.render('messages.hbs', {
+        result,
+        imgPic
+      })
+    })
+    .catch((err) => next(err))
 })
 
-router.get('/messages/:itemId', validate, (req,res,next)=>{
+router.get('/messages/:itemId', validate, (req, res, next) => {
   const imgPic = req.session.userInfo.img
-  const { itemId } = req.params
-  MsgModel.findOne({item:itemId})
-  .populate('item')
-  .populate('messages.sender')
-  .then((result) => {
-    let newResult = JSON.parse(JSON.stringify(result))
-    newResult.messages.forEach(e=>{
-      if(e.sender._id == req.session.userInfo._id.toString()){
-        e.isMyMsg = true;
+  const {
+    itemId
+  } = req.params
+  MsgModel.findOne({
+      item: itemId
+    })
+    .populate('item')
+    .populate('messages.sender')
+    .then((result) => {
+      let newResult = JSON.parse(JSON.stringify(result))
+      newResult.messages.forEach(e => {
+        if (e.sender._id == req.session.userInfo._id.toString()) {
+          e.isMyMsg = true;
+        }
+      })
+
+      res.render(`messages-by-item.hbs`, {
+        result: newResult,
+        imgPic
+      })
+    })
+    .catch((err) => next(err));
+})
+
+router.post('/messages/:itemId', validate, (req, res, next) => {
+
+  const {
+    itemId
+  } = req.params;
+  const {
+    smsarea
+  } = req.body;
+
+  MsgModel.findOne({
+      item: itemId
+    })
+    .then((result) => {
+      if (smsarea) {
+        return MsgModel.findByIdAndUpdate(result, {
+          $push: {
+            messages: {
+              sender: req.session.userInfo._id,
+              message: smsarea,
+              timestamp: new Date()
+            }
+          }
+        }, {
+          new: true
+        })
       }
     })
-
-    res.render(`messages-by-item.hbs`, {result: newResult, imgPic})
-  })
-  .catch((err) =>next(err));
-})
-
-router.post('/messages/:itemId', validate, (req,res,next)=>{
-
-  const { itemId } = req.params;
-  const { smsarea } = req.body;
-  
-  MsgModel.findOne({item:itemId})
-  .then((result)=>{
-    if(smsarea){
-    return MsgModel.findByIdAndUpdate(result,{$push:{messages:{sender: req.session.userInfo._id, message: smsarea, timestamp:new Date()}}}, {new: true})
-    }
-  })
-  .then((result) => {   
-   res.redirect(`/messages/${itemId}`)
-  })
-  .catch((err) => {
-    next(err)
-  })
+    .then((result) => {
+      res.redirect(`/messages/${itemId}`)
+    })
+    .catch((err) => {
+      next(err)
+    })
 })
 
 module.exports = router;

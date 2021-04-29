@@ -1,32 +1,32 @@
 <div class="form-container">
   <h2>Login</h2>
-<form method="POST" action="/login" class="auth-form">
- 
-  <div class="mb-3">
-  <label class="form-label">Username</label>
-  <input type="text" name="username" placeholder="enter username" class="form-control">
-  </div>
-  <br>
-  <div class="mb-3">
-  <label class="form-label">Password</label>
-  <input type="password" name="password" placeholder ="enter password" class="form-control">
-  </div>
-  
+  <form method="POST" action="/login" class="auth-form">
 
-  <div class="button-container">
-  <button type="submit" class="btn btn-primary">Log In</button>
-  </div>
-  <br>
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input type="text" name="username" placeholder="enter username" class="form-control">
+    </div>
+    <br>
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" name="password" placeholder="enter password" class="form-control">
+    </div>
+
+
+    <div class="button-container">
+      <button type="submit" class="btn btn-primary">Log In</button>
+    </div>
+    <br>
 
 
     {{#if msg}}
     <div class="msg-container">
-        {{msg}}
+      {{msg}}
     </div>
     {{/if}}
     <div class="div-login">
- <p>Need an account? <a href="/signup" class="a-login">Sign up</a></p>
- </div>
+      <p>Need an account? <a href="/signup" class="a-login">Sign up</a></p>
+    </div>
 
-</form>
+  </form>
 </div>

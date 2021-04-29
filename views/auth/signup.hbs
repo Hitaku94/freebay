@@ -1,34 +1,33 @@
- 
 <div class="form-container">
-    <h2>Sign Up</h2>
+  <h2>Sign Up</h2>
 
-<form method="POST" action="/signup" class="auth-form">
- 
-  <div class="mb-3">
-  <label class="form-label">Username</label>
-  <input type="text" name="username" placeholder="enter username" class="form-control">
-  </div>
+  <form method="POST" action="/signup" class="auth-form">
 
-  <div class="mb-3">
-  <label class="form-label">E-mail</label>
-  <input type="text" name="email" placeholder="enter email@" class="form-control">
-  </div>
- 
-   <div class="mb-3">
-  <label class="form-label">Password</label>
-  <input type="password" name="password" placeholder ="enter password" class="form-control">
-  </div>
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input type="text" name="username" placeholder="enter username" class="form-control">
+    </div>
 
-  <div class="button-container">
-  <button type="submit" class="btn btn-primary">Sign up</button>
-  </div>
-  <br>
- 
-{{#if msg}}
- <div class="error msg-container">{{msg}}</div>
-{{/if}}
-<div class="div-login">
- <p>I have already an account? <a href="/login" class="a-login">Log in here</a></p>
- </div>
-</form>
+    <div class="mb-3">
+      <label class="form-label">E-mail</label>
+      <input type="text" name="email" placeholder="enter email@" class="form-control">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" name="password" placeholder="enter password" class="form-control">
+    </div>
+
+    <div class="button-container">
+      <button type="submit" class="btn btn-primary">Sign up</button>
+    </div>
+    <br>
+
+    {{#if msg}}
+    <div class="error msg-container">{{msg}}</div>
+    {{/if}}
+    <div class="div-login">
+      <p>I have already an account? <a href="/login" class="a-login">Log in here</a></p>
+    </div>
+  </form>
 </div>

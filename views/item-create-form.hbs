@@ -1,58 +1,58 @@
 <h1 id="item-create-title">Item create form</h1>
 <div class="item-create-container">
 
- <form action="/items/create" method="POST" enctype="multipart/form-data">
-  <div>
-  <label>Title</label>
-  <input type="text" name="title" placeholder="Item title">
-  <br>
-  <br>
-  <br>
-  <label for="category">Choose a category:</label>
-  <select name='category' id="category">
-    <option value="house">House</option>
-    <option value="sports">Sports</option>
-    <option value="games">Games</option>
-    <option value="garden">Garden</option>
-  </select>
-  <br>  
-  <br>  
-  <br>  
-  </div>
+  <form action="/items/create" method="POST" enctype="multipart/form-data">
+    <div>
+      <label>Title</label>
+      <input type="text" name="title" placeholder="Item title">
+      <br>
+      <br>
+      <br>
+      <label for="category">Choose a category:</label>
+      <select name='category' id="category">
+        <option value="house">House</option>
+        <option value="sports">Sports</option>
+        <option value="games">Games</option>
+        <option value="garden">Garden</option>
+      </select>
+      <br>
+      <br>
+      <br>
+    </div>
 
-  <div>
-  <input type="radio" name="condition" id="new" value="new" selected>
-  <label for="new">New</label>
-  <input type="radio" name="condition" id="used" value="used">
-  <label for="used">Used</label>
-  </div>
-  <br><br>
-  <div>
-    <label>Price</label>
-    <input type="text" name="price" placeholder="Item price">
+    <div>
+      <input type="radio" name="condition" id="new" value="new" selected>
+      <label for="new">New</label>
+      <input type="radio" name="condition" id="used" value="used">
+      <label for="used">Used</label>
+    </div>
     <br><br>
-  </div>
-<br>  
- 
-  <div>
-  <textarea id="description" name="description" rows="4" cols="50" placeholder="Description">
-  </textarea>
-  </div>
-  <br>
-  <div>
-    <label for="imageUrl">Add Images</label>
-    <input type="file" name="imageUrl" accept="image/png, image/jpg">
+    <div>
+      <label>Price</label>
+      <input type="text" name="price" placeholder="Item price">
+      <br><br>
+    </div>
     <br>
+
+    <div>
+      <textarea id="description" name="description" rows="4" cols="50" placeholder="Description">
+    </textarea>
+    </div>
     <br>
     <div>
-    <button type="submit" id="item-create-btn" class="btn btn btn-primary">Create</button>
+      <label for="imageUrl">Add Images</label>
+      <input type="file" name="imageUrl" accept="image/png, image/jpg">
+      <br>
+      <br>
+      <div>
+        <button type="submit" id="item-create-btn" class="btn btn btn-primary">Create</button>
+      </div>
     </div>
-  </div>
-</form>  
+  </form>
 
   <br>
 
-{{#if msg}}
- <div class="error">{{msg}}</div>
-{{/if}}
+  {{#if msg}}
+  <div class="error">{{msg}}</div>
+  {{/if}}
 </div>

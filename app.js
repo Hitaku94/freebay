@@ -33,11 +33,11 @@ app.use(session({
   saveUninitialized: false,
   resave: false,
   cookie: {
-      maxAge: 24 * 60 * 60 * 1000
+    maxAge: 24 * 60 * 60 * 1000
   },
   store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI || "mongodb://localhost/freebay",
-      ttl: 24 * 60 * 60
+    mongoUrl: process.env.MONGODB_URI || "mongodb://localhost/freebay",
+    ttl: 24 * 60 * 60
   })
 }))
 

@@ -4,13 +4,13 @@ const { Schema, model } = require("mongoose");
 const msgSchema = new Schema({
   item: {
     type: Schema.Types.ObjectId,
-    ref: 'Item'
+    ref: "Item",
   },
   messages: [
     {
-      sender:{
+      sender: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: "User",
       },
       message: {
         type: String,
@@ -19,10 +19,8 @@ const msgSchema = new Schema({
       timestamp: Date,
     },
   ],
-})
+});
 
 const Msg = model("Msg", msgSchema);
 
 module.exports = Msg;
-
-

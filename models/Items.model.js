@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-require('../models/User.model')
+require("../models/User.model");
 
 // TODO: Please make sure you edit the user model to whatever makes sense in this case
 const itemSchema = new Schema({
@@ -10,14 +10,14 @@ const itemSchema = new Schema({
   },
   category: [String],
   condition: [String],
-    
+
   description: {
     type: String,
     required: true,
   },
   img: {
     type: String,
-    default: 'https://anythingworld.org/static/media/logo_legs.74693227.png',
+    default: "https://anythingworld.org/static/media/logo_legs.74693227.png",
   },
   price: {
     type: Number,
@@ -25,16 +25,14 @@ const itemSchema = new Schema({
   },
   buyer: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: "User",
   },
   seller: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
-  }
+    ref: "User",
+  },
 });
 
 const Item = model("Item", itemSchema);
 
 module.exports = Item;
-
-

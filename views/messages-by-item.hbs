@@ -1,25 +1,24 @@
-
 <h1 id='msgtitle'>Message by {{result.item.title}}</h1>
 <div class="msgsbox">
   <div class='indmsgbox'>
     {{#each result.messages}}
-      <div>
-        {{#if isMyMsg}}
-          <div class="sent">
-            {{this.message}}
-          </div>
-          {{else}}
-          <div class="received">
-            {{this.message}}
-          </div>
-          {{/if}}
-        </div>
-      {{/each}}
+    <div>
+      {{#if isMyMsg}}
+      <div class="sent">
+        {{this.message}}
+      </div>
+      {{else}}
+      <div class="received">
+        {{this.message}}
+      </div>
+      {{/if}}
+    </div>
+    {{/each}}
   </div>
 </div>
 
 
-<form class ="msgform" action="/messages/{{result.item._id}}" method="POST">
+<form class="msgform" action="/messages/{{result.item._id}}" method="POST">
   <input type="text" name="smsarea" placeholder="Write your msg here..."></input>
   <button type="submit" class="btn btn btn-primary">Send</button>
 </form>

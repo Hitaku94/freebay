@@ -1,8 +1,10 @@
-<h1>Messages Page</h1>
+<h1>
+  Messages Page
+</h1>
 <div>
   <div>
     {{#each result}}
-     <a href="/messages/{{this._id}}">
+      <a href="/messages/{{this._id}}">
         <div>
           {{this.title}}
           {{this.condition}}
@@ -10,5 +12,5 @@
         </div>
       </a>
     {{/each}}
-    </div>
+  </div>
 </div>

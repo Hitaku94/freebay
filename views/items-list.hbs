@@ -1,13 +1,13 @@
 <h1>Items page</h1>
 <div class="item-container">
-{{#each result}}
-<div class="item-list">
-<a href="/items/{{this._id}}"><img src="{{this.img}}">
-<h5>{{this.title}}</h5>
-<h6>${{this.price}}</h6>
-<h6>{{this.seller.username}}</h6>
-</a>
-</div>
-{{/each}}
+  {{#each result}}
+  <div class="item-list">
+    <a href="/items/{{this._id}}"><img src="{{this.img}}">
+      <h5>{{this.title}}</h5>
+      <h6>${{this.price}}</h6>
+      <h6>{{this.seller.username}}</h6>
+    </a>
+  </div>
+  {{/each}}
 
 </div>
