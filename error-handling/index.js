@@ -1,7 +1,6 @@
 module.exports = (app) => {
   const imgPic = req.session.useInfo.img
   app.use((req, res, next) => {
-    
     // this middleware runs whenever requested page is not available
     res.status(404).render("not-found.hbs", {imgPic});
   });
