@@ -1,4 +1,4 @@
-<h1 id='msgtitle'>Message by {{result.item.title}}</h1>
+<h1 id='msgtitle'>Message : {{result.item.title}}</h1>
 <div class="msgsbox">
   <div class='indmsgbox'>
     {{#each result.messages}}
@@ -22,3 +22,7 @@
   <input type="text" name="smsarea" placeholder="Write your msg here..."></input>
   <button type="submit" class="btn btn btn-primary">Send</button>
 </form>
+
+<div class="a-msg-container">
+<a  href="/messages">Back to messages</a>
+</div>

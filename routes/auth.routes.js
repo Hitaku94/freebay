@@ -132,6 +132,8 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/')
 })
 
+/* settings */
+
 router.get('/settings', validate, (req, res, next) => {
   const imgPic = req.session.userInfo.img
   res.render('settings.hbs', {
@@ -140,46 +142,47 @@ router.get('/settings', validate, (req, res, next) => {
 })
 
 
-// router.post('/settings', validate, (req, res, next) => {
-//   let { newuser, newemail, newpassword } = req.body
-//   if(newuser ==''){
-//     console.log('fuckthis')
-//     newuser = req.session.userInfo.username
-//   }
+router.post('/settings', validate, (req, res, next) => {
+   let { newuser, newemail, newpassword } = req.body
+   if(newuser ==''){
+     console.log('fuckthis')
+     newuser = req.session.userInfo.username
+   }
 
-//   if(newemail == ''){
-//     console.log('fuckthistoo')
-//      newemail = req.session.userInfo.email
-//   }
+   if(newemail == ''){
+     console.log('fuckthistoo')
+      newemail = req.session.userInfo.email
+   }
 
-//   if(newpassword == ''){
-//     console.log('fuckthistohellandback')
-//     newpassword = req.session.userInfo.password
-//   }
-//   else{
-//     const passRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-//     if (!passRe.test(newpassword)) {
-//       res.render('settings.hbs', { msg: 'Password must be 8 characters, must have a number, and an uppercase letter' })
-//       //tell node to come out of the callback code
-//       return;
-//     }
+   if(newpassword == ''){
+     console.log('fuckthistohellandback')
+     newpassword = req.session.userInfo.password
+   }
+   else{
+     const passRe = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+     if (!passRe.test(newpassword)) {
+       res.render('settings.hbs', { msg: 'Password must be 8 characters, must have a number, and an uppercase letter' })
+       //tell node to come out of the callback code
+       return;
+     }
 
-//   }
+   }
 
 
-//   const salt = bcrypt.genSaltSync(12);
-//   const hash = bcrypt.hashSync(newpassword, salt);
-//   newpassword = hash
+   const salt = bcrypt.genSaltSync(12);
+   const hash = bcrypt.hashSync(newpassword, salt);
+   newpassword = hash
 
-//   UserModel.findByIdAndUpdate(req.session.userInfo._id,{ username: newuser, email : newemail, password: newpassword},{new: true})
-//     .then((result) => {
-//       req.session.destroy()
-//       res.redirect('/')
-//     }).catch((err) => {
-//       next(err)
-//     });
+   UserModel.findByIdAndUpdate(req.session.userInfo._id,{ username: newuser, email : newemail, password: newpassword},{new: true})
+     .then((result) => {
+       console.log(result)
+      
+       res.redirect('/')
+     }).catch((err) => {
+       next(err)
+     });
 
-// })
+ })
 
 // Other routes
 

@@ -233,6 +233,8 @@ img {
 
 #item-create-title {
   text-align: center;
+  color:#AC3B61;
+  margin: 10px auto 20px auto;
 }
 
 #item-create-btn {
@@ -444,7 +446,9 @@ form input[id="fileToUpload"] {
 }
 
 .indmsgbox {
-  width: 60%
+  width: 40%;
+  overflow-y: auto;
+  max-height: 300px;
 }
 
 .sent {
@@ -468,6 +472,7 @@ form input[id="fileToUpload"] {
 #msgtitle {
   margin: 10px;
   text-align: center;
+  color:#AC3B61;
 }
 
 .msgform {
@@ -480,6 +485,12 @@ form input[id="fileToUpload"] {
 
 .msgform input {
   width: 100%;
+}
+
+.a-msg-container {
+  text-align: center;
+  margin-top: 50px;
+  font-size: x-large;
 }
 
 .btn-primary {
@@ -557,6 +568,12 @@ form input[id="fileToUpload"] {
 
 .p-msg {
   margin-bottom: 5px;
+}
+
+/* Settings */
+
+.deactivate-form {
+  padding-top: 30px;
 }
 
 /*Not found*/
