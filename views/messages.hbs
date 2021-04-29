@@ -1,14 +1,17 @@
-<h1>
-  Messages Page
+<h1 class="h1-message">
+  My messages
 </h1>
-<div>
-  <div>
+<div class="info-msg-container-parent">
+  <div class="info-msg-container">
     {{#each result}}
       <a href="/messages/{{this._id}}">
-        <div>
-          {{this.title}}
-          {{this.condition}}
-          {{this.price}}
+        <div class="info-msg-container-child">
+          <div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
+          <div class="info">
+          <p>{{this.title}}</p>
+          <p></p>{{this.condition}}</p>
+          <p>${{this.price}}</p>
+          </div>
         </div>
       </a>
     {{/each}}
