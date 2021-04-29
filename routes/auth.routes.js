@@ -411,6 +411,7 @@ router.get('/messages/:itemId', validate, (req,res,next)=>{
   const imgPic = req.session.userInfo.img
   const { itemId } = req.params
   MsgModel.findOne({item:itemId})
+  .populate('item')
   .populate('messages.sender')
   .then((result) => {
     let newResult = JSON.parse(JSON.stringify(result))
@@ -419,6 +420,7 @@ router.get('/messages/:itemId', validate, (req,res,next)=>{
         e.isMyMsg = true;
       }
     })
+
     res.render(`messages-by-item.hbs`, {result: newResult, imgPic})
   })
   .catch((err) =>next(err));
@@ -431,11 +433,11 @@ router.post('/messages/:itemId', validate, (req,res,next)=>{
   
   MsgModel.findOne({item:itemId})
   .then((result)=>{
-    
-    return MsgModel.findByIdAndUpdate(result,  {$push:{messages:{sender: req.session.userInfo._id, message: smsarea, timestamp:new Date()}}}, {new: true})
+    if(smsarea){
+    return MsgModel.findByIdAndUpdate(result,{$push:{messages:{sender: req.session.userInfo._id, message: smsarea, timestamp:new Date()}}}, {new: true})
+    }
   })
-  .then((result) => {
-   
+  .then((result) => {   
    res.redirect(`/messages/${itemId}`)
   })
   .catch((err) => {

@@ -378,6 +378,53 @@ form input[id="fileToUpload"] {
   color: red;
 }
 
+.msgsbox{
+  display: flex;
+  justify-content: center;
+  width: 100%
+}
+.indmsgbox{
+  width: 60%
+}
+
+.sent{
+  margin: 7px;
+  padding: 5px;
+  padding-right: 50px;
+  display: flex;
+  justify-content: flex-end;
+  background-color:#123c6967;
+}
+.received{
+  margin: 7px;
+  padding: 5px;
+  padding-left: 30px;
+  display: flex;
+  justify-content: flex-start;
+  background-color:#bab2b569;
+}
+
+#msgtitle{
+  margin: 10px;
+  text-align: center;
+}
+
+.msgform {
+  display: flex;
+  margin: 10px auto;
+  justify-content: space-between;
+  width: 80%;
+  
+}
+
+.msgform input{
+ width: 100%;
+}
+.btn-primary{
+  border-color: #123C69;
+  background-color: #123C69;
+  }
+
 /*Not found*/
 
 #notfound {
@@ -463,6 +510,7 @@ form input[id="fileToUpload"] {
 .notfound a:hover {
   color: #fff;
   background-color: #00b5c3;
+  
 }
 
 @media only screen and (max-width: 480px) {
@@ -478,4 +526,5 @@ form input[id="fileToUpload"] {
     padding-left: 15px;
     padding-right: 15px;
   }
+  
 }
