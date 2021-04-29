@@ -9,11 +9,12 @@ body {
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0;
   box-sizing: border-box;
+  background-color: #EEE2DC;
 }
 
 
 a {
-  color: #00b7ff;
+  color: #123C69;
   text-decoration: none;
 }
 
@@ -86,6 +87,14 @@ hr{
   flex-grow: 0;
 }
 
+.active {
+  color:#AC3B61;
+}
+
+.bg-light {
+  background-color: #EDC7B7!important;
+}
+
 .container-fluid {
   padding-right: 5%;
   padding-left: 5%;
@@ -147,15 +156,23 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-top: 4rem;
+  width: 25rem;
 
 }
 
 .item-detail-img {
   display: flex; 
   align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
+  align-content: center;
+  justify-content: space-evenly;
+  flex-direction: row;
 	flex-wrap: wrap;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  width: 100%;
+  padding-left: 17rem;
+    padding-right: 17rem;
 }
 
 .price {
@@ -170,7 +187,7 @@ img {
   height: 120px;
   padding-top: 15px;
   padding-bottom: 25px;
-  width: 90vh;
+  width: 100%;
   font-size: small;
 }
 
@@ -187,21 +204,22 @@ img {
   display:flex;
   flex-direction: column;
   border: 1px solid black;
-  height: 200px;
+  height: 20rem;
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
-  width: 25%
+  width: 18rem;
+  min-width:18rem;
 }
 
 .item-detail-upper-container {
-  display: inline-flex;
+  display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-evenly;
+	flex-wrap: nowrap;
+	justify-content: center;
 	align-items: center;
 	align-content: center;
-  width: 100%
+  width: 50%
 }
 
 /* item create */
@@ -214,7 +232,7 @@ img {
 }
 
 /* */
-.middle-container {
+.middle-container-item {
   display: inline-flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -225,9 +243,14 @@ img {
   padding-right: 30px; 
   gap: 25px;
   margin: auto 200px auto 200px;
-  border-color: darkslategrey;
-  border: 2px solid;
+  border: 1px solid #AC3B61;
+  background-color:#f1f1f1;
   
+}
+
+.middle-container {
+  background-color: #EEE2DC;
+  margin-bottom: 8rem
 }
 
 .container {
@@ -251,9 +274,11 @@ img {
   display:flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #BAB2B5;
   height: 50px;
   color: black;
+  bottom: 0;
+  width: 100%;
 }
 
 /* search bar */
@@ -265,6 +290,7 @@ img {
 	align-items: center;
 	align-content: center;
   height: 50%;
+  background-color: #eee2dc88;
 }
 
 .form-search {
@@ -282,6 +308,8 @@ img {
   border: 1px solid #ced4da;
   border-radius: .25rem;
   line-height: 1.5;
+  background-color: #AC3B61;
+  color: #EEE2DC;
 }
 
 .category {
@@ -365,6 +393,11 @@ form input[id="fileToUpload"] {
   display:block;
   width: 10rem;
   height: 10rem;
+}
+
+.item-detail-img-container{
+  width: 20rem;
+  height: 20rem;
 }
 
 .itemimg{

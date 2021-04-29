@@ -1,26 +1,6 @@
 <div class="item-detail-img">
-<div class="item-detail-upper-container">
-  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="{{result.img}}" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="{{result.img}}" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="{{result.img}}" class="d-block w-100" alt="...">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
+<!--<div class="item-detail-upper-container">-->
+<div class="item-detail-img-container"><img class="itemimg" src="{{result.img}}"></div>
 {{#unless ownerIsVisitor}}
   <div class="buy-container">
     <p>{{result.seller.username}}</p>
@@ -41,7 +21,7 @@
     {{/if}}
   </div>
 {{/unless}}
-</div>
+<!--</div>-->
   <div class="item-detail">
     <h2>{{result.title}}</h2>
     <hr>

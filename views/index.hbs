@@ -15,13 +15,13 @@
 </form>
 </div>
 
-
 <div class="middle-container">
+<div class="middle-container-item">
     {{#each result}}
         {{#unless ownerIsVisitor}}
             {{#unless this.buyer}}
                 <div class="item-list">
-                    <a href="/items/{{this._id}}"><img src="{{this.img}}">
+                    <a href="/items/{{this._id}}"><div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
                         <h5>{{this.title}}</h5>
                         <h6>${{this.price}}</h6>
                         <h6>{{this.seller.username}}</h6>
@@ -30,4 +30,5 @@
             {{/unless}}
         {{/unless}}
     {{/each}}
+</div>
 </div>
