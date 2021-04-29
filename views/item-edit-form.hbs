@@ -5,7 +5,7 @@
   <form action="/items/{{result._id}}/update" method="POST">
     <div>
       <label>Title</label>
-      <input type="text" name="title" value={{result.title}}>
+      <input type="text" name="title" value="{{result.title}}">
       <br>
       <br>
       <br>
@@ -15,6 +15,8 @@
         <option value="sports">Sports</option>
         <option value="games">Games</option>
         <option value="garden">Garden</option>
+
+
       </select>
       <br>
       <br>
@@ -22,7 +24,7 @@
     </div>
 
     <div>
-      <input type="radio" name="condition" id="new" value="new">
+      <input type="radio" name="condition" id="new" value="new" checked>
       <label for="new">New</label>
       <input type="radio" name="condition" id="used" value="used">
       <label for="used">Used</label>
