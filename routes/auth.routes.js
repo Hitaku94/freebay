@@ -358,10 +358,17 @@ router.post('/items/:itemId/update', validate, (req, res, next) => {
       const imgPic = req.session.userInfo.img
       const {_id, username} = req.session.userInfo
       
-      ItemsModel.find({seller: _id})
+      ItemsModel.find({$or : [{buyer: _id}, {seller: _id}]})
       .populate('seller')
-      .then((result) => {           
-        res.render('profile.hbs', {result, username, imgPic})
+      .populate('buyer')
+      .then((result) => {
+        let sellerIs = result.filter(e=>{
+          return e.seller._id == _id
+        });
+        let buyerIs = result.filter(e=>{
+          return e.buyer?._id == _id
+        })                   
+        res.render('profile.hbs', {buyerIs, sellerIs, username, imgPic})
       })
       .catch((err) => next(err))
   })
@@ -406,7 +413,13 @@ router.get('/messages/:itemId', validate, (req,res,next)=>{
   MsgModel.findOne({item:itemId})
   .populate('messages.sender')
   .then((result) => {
-    res.render(`messages-by-item.hbs`, {result, imgPic})
+    let newResult = JSON.parse(JSON.stringify(result))
+    newResult.messages.forEach(e=>{
+      if(e.sender._id == req.session.userInfo._id.toString()){
+        e.isMyMsg = true;
+      }
+    })
+    res.render(`messages-by-item.hbs`, {result: newResult, imgPic})
   })
   .catch((err) =>next(err));
 })

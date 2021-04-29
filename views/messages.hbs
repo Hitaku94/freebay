@@ -2,6 +2,7 @@
 <div>
   <div>
     {{#each result}}
+    {{#if isMsg}}
       <a href="/messages/{{this._id}}">
         <div>
           {{this.title}}
@@ -9,6 +10,7 @@
           {{this.price}}
         </div>
       </a>
+      {{/if}}
     {{/each}}
     </div>
 </div>
