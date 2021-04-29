@@ -1,19 +1,17 @@
 <h1 class="h1-message">
   My messages
 </h1>
-<div class="info-msg-container-parent">
+
   <div class="info-msg-container">
     {{#each result}}
       <a href="/messages/{{this._id}}">
         <div class="info-msg-container-child">
-          <div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
+          <div class="item-img-container messages-fix-img"><img class="itemimg" src="{{this.img}}"></div>
           <div class="info">
-          <p>{{this.title}}</p>
-          <p></p>{{this.condition}}</p>
-          <p>${{this.price}}</p>
+          <h3 class="msg-title-container">{{this.title}}</h3>
+          <p class="price p-msg">price: <span class="result-price"> ${{this.price}}</span></p>
           </div>
         </div>
       </a>
     {{/each}}
   </div>
-</div>
