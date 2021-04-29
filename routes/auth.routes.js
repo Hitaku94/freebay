@@ -186,7 +186,7 @@ router.get('/settings', validate, (req, res, next) => {
 /* GET home page */
 
 router.get("/", (req, res, next) => {
-
+  req.app.locals.isUserLoggedIn = !!req.session.userInfo;  
   let imgPic;
   if (req.app.locals.isUserLoggedIn) {
     imgPic = req.session.userInfo.img
@@ -296,7 +296,7 @@ router.post('/items/create', validate, uploader.single("imageUrl"), (req, res, n
       seller
     })
     .then((result) => {
-      res.redirect('/items')
+      res.redirect('/profile')
     })
     .catch((err) => {
       next(err)
@@ -516,8 +516,7 @@ router.get('/messages', validate, (req, res, next) => {
     })
     .populate('buyer')
     .then((result) => {
-      console.log(result)
-      res.render('messages.hbs', {
+        res.render('messages.hbs', {
         result,
         imgPic
       })
