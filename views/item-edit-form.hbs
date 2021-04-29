@@ -5,16 +5,18 @@
   <form action="/items/{{result._id}}/update" method="POST">
     <div>
       <label>Title</label>
-      <input type="text" name="title" value={{result.title}}>
+      <input type="text" name="title" value="{{result.title}}">
       <br>
       <br>
       <br>
       <label for="category">Choose a category:</label>
       <select name='category' id="category">
-        <option value="house">House</option>
-        <option value="sports">Sports</option>
-        <option value="games">Games</option>
-        <option value="garden">Garden</option>
+        <option value="House">House</option>
+        <option value="Sports">Sports</option>
+        <option value="Games">Games</option>
+        <option value="Garden">Garden</option>
+        <option value="selected" selected>{{result.category}}</option>
+
       </select>
       <br>
       <br>
@@ -22,7 +24,7 @@
     </div>
 
     <div>
-      <input type="radio" name="condition" id="new" value="new">
+      <input type="radio" name="condition" id="new" value="new" checked>
       <label for="new">New</label>
       <input type="radio" name="condition" id="used" value="used">
       <label for="used">Used</label>
