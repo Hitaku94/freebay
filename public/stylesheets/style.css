@@ -3,6 +3,8 @@
 html, body
 {
     height: 100%;
+    
+    
 }
 
 body {
@@ -10,6 +12,8 @@ body {
   margin: 0;
   box-sizing: border-box;
   background-color: #EEE2DC;
+  min-height: 100%;
+  
 }
 
 
@@ -125,7 +129,6 @@ img {
 .item-list {
   display: flex;
   justify-content: center;
-  flex-direction: column;
   text-align: start;
   padding-bottom: 20px;
   padding-left: 10px;
@@ -262,7 +265,6 @@ img {
 
 .middle-container {
   background-color: #EEE2DC;
-  margin-bottom: 8rem
 }
 
 .container {
@@ -283,14 +285,14 @@ img {
 }
 
 .footer-container-down {
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #BAB2B5;
-  height: 50px;
-  color: black;
+  position:fixed;
   bottom: 0;
+  text-align: center;
+  padding: 1rem;
+  background-color: #BAB2B5;
+  color: black;
   width: 100%;
+ 
 }
 
 /* search bar */
@@ -339,7 +341,7 @@ img {
 	justify-content: center;
 	align-items: center;
 	align-content: center;
-  background-color: darkgoldenrod;
+  background-color: #EEE2DC;
 
 
 }
@@ -374,7 +376,8 @@ width: inherit;
 
 .username-profile {
   font-weight: 500;
-  padding: 5%
+  padding: 5%;
+  color:#AC3B61;
 }
 
 form input[id="fileToUpload"] {
@@ -397,8 +400,12 @@ form input[id="fileToUpload"] {
 }
 
 .profile-bottom-container{
-  width: 80%;
-  margin: auto;
+  padding: 0 10% 0 10%;
+  background-color:#EDC7B7;
+}
+
+.accordion-item {
+  background-color: #123C69;
 }
 
 .item-img-container{

@@ -3,7 +3,7 @@
     <div class="profile-img-container">
       <div class="fix-size-img"><img class="profile-img" src="{{imgPic}}"></div>
       <form class="profile-form-edit" action="/update" method="post" enctype="multipart/form-data">
-        
+
         <label for="fileToUpload">
           <img class="profile-img-edit" src="../images/edit1.png">
 
@@ -32,20 +32,21 @@
             <div class="middle-container">
 
               {{#each sellerIs}}
-              
-                <div class="item-list">
-                  <a href="/items/{{this._id}}"><div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
-                    <h5>{{this.title}}</h5>
-                    {{#if this.buyer}}
-                      <h6 class="sold">SOLD</h6>
-                    {{else}}
-                      {{this.price}}
-                    {{/if}}
-                    <h6>{{this.seller.username}}</h6>
-                  </a>
-                
+
+              <div class="item-list">
+                <a href="/items/{{this._id}}">
+                  <div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
+                  <h5>{{this.title}}</h5>
+                  {{#if this.buyer}}
+                  <h6 class="sold">SOLD</h6>
+                  {{else}}
+                  {{this.price}}
+                  {{/if}}
+                  <h6>{{this.seller.username}}</h6>
+                </a>
+
               </div>
-           
+
               {{/each}}
 
             </div>
@@ -63,18 +64,19 @@
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
           data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            
-            {{#each buyerIs}}
+            <div class="middle-container">
+              {{#each buyerIs}}
               <div class="item-list">
-                  <a href="/items/{{this._id}}"><div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
-                    <h5>{{this.title}}</h5>
-                    <h5>{{this.price}}</h5>
-                    <h6>{{this.seller.username}}</h6>
-                  </a>  
+                <a href="/items/{{this._id}}">
+                  <div class="item-img-container"><img class="itemimg" src="{{this.img}}"></div>
+                  <h5>{{this.title}}</h5>
+                  <h5>{{this.price}}</h5>
+                  <h6>{{this.seller.username}}</h6>
+                </a>
               </div>
-            {{/each}}
+              {{/each}}
 
-
+            </div>
           </div>
         </div>
       </div>
