@@ -3,15 +3,9 @@
     <div class="profile-img-container">
       <div class="fix-size-img"><img class="profile-img" src="{{imgPic}}"></div>
       <form class="profile-form-edit" action="/update" method="post" enctype="multipart/form-data">
-
-        <label for="fileToUpload">
-          <img class="profile-img-edit" src="../images/edit1.png">
-
-        </label>
-        <button class="profile-btn-update" type="submit">Ok</button>
-        <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpg">
-
-
+        <label for="fileToUpload"><img class="profile-img-edit" src="../images/edit1.png"></label>
+        <button class="profile-btn-update" type="submit"><img class="profile-img-edit-verified" src="../images/verified1.png"></button>
+        <input type="file" name="fileToUpload" id="fileToUpload" accept="image/png, image/jpeg">
       </form>
     </div>
     <h1 class="username-profile">{{username}}</h1>
@@ -23,8 +17,7 @@
         <h2 class="accordion-header" id="headingOne">
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
             aria-expanded="true" aria-controls="collapseOne">
-            My Items for sale
-          </button>
+            <span class="accordion-btn-text">My Items for sale</span></button>
         </h2>
         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
           data-bs-parent="#accordionExample">
@@ -58,7 +51,7 @@
         <h2 class="accordion-header" id="headingTwo">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            My buying history
+            <span class="accordion-btn-text">My buying history</span>
           </button>
         </h2>
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"

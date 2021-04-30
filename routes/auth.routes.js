@@ -270,11 +270,7 @@ router.post('/items/create', validate, uploader.single("imageUrl"), (req, res, n
 
   let seller = req.session.userInfo._id
   if (!title || !description || !price) {
-    res.render('item-create-form.hbs', {msg: "Please enter all field", imgPic})
-    return;
-  }
-  if(typeof price != 'number'){
-    res.render('item-create-form.hbs', {msg: "Price should be a number", imgPic})
+    res.render('item-create-form.hbs', {msg: "Please enter all fields", imgPic})
     return;
   }
 
