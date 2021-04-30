@@ -1,8 +1,10 @@
 <h1 id="item-create-title">Update add : {{result.title}}</h1>
+
 <div class="item-create-container">
 
 
   <form action="/items/{{result._id}}/update" method="POST">
+  <hr class="line-form">
     <div>
       <label>Title</label>
       <input class="form-radius" type="text" name="title" value="{{result.title}}">

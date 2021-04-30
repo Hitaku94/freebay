@@ -1,7 +1,9 @@
 <h1 id="item-create-title">Create add</h1>
+
 <div class="item-create-container">
 
   <form class="form-create" action="/items/create" method="POST" enctype="multipart/form-data">
+  <hr class="line-form">
     <div>
       <label>Title</label>
       <input class="form-radius" type="text" name="title" placeholder="Item title">
@@ -39,7 +41,7 @@
     </textarea>
     </div>
     <br>
-    <div class="align-bottom-create-form">
+  
     <div>
       <label for="imageUrl">Add Images</label>
       <input class="form-radius" type="file" name="imageUrl" accept="image/png, image/jpg">
@@ -56,5 +58,5 @@
   {{#if msg}}
   <div class="error msg-container">{{msg}}</div>
   {{/if}}
-  </div>
+ 
 </div>
