@@ -12,11 +12,11 @@
 
     {{#if isUserBuy}}
     <form method="GET" action="/messages/{{result._id}}">
-      <button>Message</button>
+      <button class="btn btn-danger"></buttonclass> Message</button>
     </form>
     {{else}}
     <form method="POST" action="/items/{{result._id}}">
-      <button>I want it</button>
+      <button class="btn btn-primary">I want it</button>
     </form>
     {{/if}}
   </div>
