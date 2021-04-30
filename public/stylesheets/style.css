@@ -65,13 +65,14 @@ hr {
   width: 300px;
   height: 50px;
   border-radius: 2px;
+  text-align: center;
 
 }
 
 .auth-form {
   border: 1px solid;
   padding: 30px;
-  border-color: lightblue;
+  border-color: #BAB2B5;
 
 }
 
@@ -223,11 +224,26 @@ img {
 
 /* item create */
 
+.line-form {
+  width: 80%;
+  height: 1px;
+  color: #123C69;
+  border: 1px solid #123C69;
+  opacity: 0.3;
+  margin: 10px auto 30px auto;
+
+}
+
+.align-bottom-create-form {
+  justify-content: center;
+}
+
 .item-create-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  
 
 }
 
@@ -306,6 +322,15 @@ img {
 }
 /* search bar */
 
+
+.a-index-search {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 1% auto 10% auto;
+}
+
 .search-bar {
   display: flex;
   flex-direction: row;
@@ -314,7 +339,7 @@ img {
   align-content: center;
   height: 50%;
   background-color: #eee2dc88;
-  margin: 10% auto 10% auto;
+  margin: 10% auto 0 auto;
 }
 
 .form-search {
@@ -738,3 +763,8 @@ form input[id="fileToUpload"] {
 }
 
 .p-error > a:hover { text-shadow: 0 0 6px #123C69; }
+
+.form-radius {
+  border-radius: 5px;
+  border:1px solid #BAB2B5;
+}

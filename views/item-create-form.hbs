@@ -1,15 +1,17 @@
 <h1 id="item-create-title">Create add</h1>
+
 <div class="item-create-container">
 
-  <form action="/items/create" method="POST" enctype="multipart/form-data">
+  <form class="form-create" action="/items/create" method="POST" enctype="multipart/form-data">
+  <hr class="line-form">
     <div>
       <label>Title</label>
-      <input type="text" name="title" placeholder="Item title">
+      <input class="form-radius" type="text" name="title" placeholder="Item title">
       <br>
       <br>
       <br>
       <label for="category">Choose a category:</label>
-      <select name='category' id="category">
+      <select class="form-radius" name='category' id="category">
         <option value="house">House</option>
         <option value="sports">Sports</option>
         <option value="games">Games</option>
@@ -29,7 +31,7 @@
     <br><br>
     <div>
       <label>Price</label>
-      <input type="text" name="price" placeholder="Item price">
+      <input class="form-radius" type="text" name="price" placeholder="Item price">
       <br><br>
     </div>
     <br>
@@ -38,9 +40,10 @@
       <textarea id="description" name="description" rows="4" cols="50" placeholder="Description"></textarea>
     </div>
     <br>
+  
     <div>
       <label for="imageUrl">Add Images</label>
-      <input type="file" name="imageUrl" accept="image/png, image/jpg">
+      <input class="form-radius" type="file" name="imageUrl" accept="image/png, image/jpg">
       <br>
       <br>
       <div>
@@ -52,6 +55,7 @@
   <br>
 
   {{#if msg}}
-  <div class="error">{{msg}}</div>
+  <div class="error msg-container">{{msg}}</div>
   {{/if}}
+ 
 </div>
