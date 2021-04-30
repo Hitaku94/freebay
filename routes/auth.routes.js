@@ -255,14 +255,8 @@ router.get('/items/create', validate, (req, res, next) => {
 })
 
 router.post('/items/create', validate, uploader.single("imageUrl"), (req, res, next) => {
-  const {
-    title,
-    category,
-    condition,
-    description,
-    img,
-    price
-  } = req.body
+  const imgPic = req.session.userInfo.img;
+  const {title,category, condition,description, img, price} = req.body
   // the uploader.single() callback will send the file to cloudinary and get you and obj with the url in return
   // You will get the image url in 'req.file.path'
   // Your code to store your url in your database should be here
@@ -276,20 +270,15 @@ router.post('/items/create', validate, uploader.single("imageUrl"), (req, res, n
 
   let seller = req.session.userInfo._id
   if (!title || !description || !price) {
-    res.render('item-create-form.hbs', {
-      msg: "Please enter all field"
-    })
+    res.render('item-create-form.hbs', {msg: "Please enter all field", imgPic})
     return;
   }
-  ItemsModel.create({
-      title,
-      category,
-      condition,
-      description,
-      img: image,
-      price,
-      seller
-    })
+  if(typeof price != 'number'){
+    res.render('item-create-form.hbs', {msg: "Price should be a number", imgPic})
+    return;
+  }
+
+  ItemsModel.create({title,category,condition, description, img: image, price, seller})
     .then((result) => {
       res.redirect('/profile')
     })
@@ -467,8 +456,6 @@ router.get('/profile', validate, (req, res, next) => {
     })
     .catch((err) => next(err))
 })
-
-
 
 
 router.post('/deactivate', validate, (req, res, next) => {
