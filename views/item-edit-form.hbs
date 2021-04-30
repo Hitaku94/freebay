@@ -5,11 +5,11 @@
   <form action="/items/{{result._id}}/update" method="POST">
     <div>
       <label>Title</label>
-      <input type="text" name="title" value="{{result.title}}">
+      <input class="form-radius" type="text" name="title" value="{{result.title}}">
       <br>
       <br>
       <br>
-      <label for="category">Choose a category:</label>
+      <label class="form-radius" for="category">Choose a category:</label>
       <select name='category' id="category">
         <option value="house">House</option>
         <option value="sports">Sports</option>
@@ -32,25 +32,25 @@
     <br><br><br>
     <div>
       <label>Price</label>
-      <input type="text" name="price" value={{result.price}}>
+      <input class="form-radius" type="text" name="price" value={{result.price}}>
       <br><br><br>
     </div>
     <br>
 
     <div>
-      <textarea id="description" name="description" rows="4" cols="50">{{result.description}}</textarea>
+      <textarea class="form-radius" id="description" name="description" rows="4" cols="50">{{result.description}}</textarea>
     </div>
     <br>
 
     <div>
       <label for="imageUrl">Add Images</label>
-      <input type="file" name="imageUrl" accept="image/png image/jpg">
+      <input class="form-radius" type="file" name="imageUrl" accept="image/png image/jpg">
       <br><br>
       <button class="btn btn btn-primary" type="submit">Update</button>
       <br><br>
     </div>
   </form>
   {{#if msg}}
-  <div class="error">{{msg}}</div>
+  <div class="error msg-container">{{msg}}</div>
   {{/if}}
 </div>

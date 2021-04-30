@@ -71,7 +71,7 @@ hr {
 .auth-form {
   border: 1px solid;
   padding: 30px;
-  border-color: lightblue;
+  border-color: #123C69;
 
 }
 
@@ -223,11 +223,21 @@ img {
 
 /* item create */
 
+.form-create{
+  border: 1px dashed #123C69;
+  padding: 20px
+}
+
+.align-bottom-create-form {
+  justify-content: center;
+}
+
 .item-create-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  
 
 }
 
@@ -738,3 +748,8 @@ form input[id="fileToUpload"] {
 }
 
 .p-error > a:hover { text-shadow: 0 0 6px #123C69; }
+
+.form-radius {
+  border-radius: 5px;
+  border:1px solid #BAB2B5;
+}
