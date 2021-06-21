@@ -1,18 +1,17 @@
 html,
 body {
   height: 100%;
-
-
 }
 
 body {
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0;
   box-sizing: border-box;
-  background-color: #EEE2DC;
+  background-color: #fff;
   min-height: 100%;
 
 }
+/* bglight #EEE2DC --#659dbd  */
 
 
 a {
@@ -275,14 +274,14 @@ img {
   padding-right: 30px;
   gap: 25px;
   margin: auto 200px auto 200px;
-  border: 2px solid #AC3B61;
+  border: 2px solid #ac3b61;
   border-radius: 10px;
-  background-color: #ffffffa3;
+  background-color: #fff;
 
 }
 
 .middle-container {
-  background-color: #EEE2DC;
+  background-color: #fff;
   display: flex;
   align-content: center;
   justify-content: center;
@@ -340,7 +339,7 @@ img {
   align-items: center;
   align-content: center;
   height: 50%;
-  background-color: #eee2dc88;
+  background-color: #fff;
   margin: 10% auto 0 auto;
 }
 
@@ -365,7 +364,7 @@ img {
 
 .category {
   padding: .375rem .75rem;
-  border: 1px solid #ced4da;
+  border: 1px solid #AC3B61;
   border-radius: .25rem;
   line-height: 1.5;
 }
@@ -378,7 +377,7 @@ img {
   justify-content: center;
   align-items: center;
   align-content: center;
-  background-color: #EEE2DC;
+  background-color: #fff;
 
 
 }
@@ -443,7 +442,7 @@ form input[id="fileToUpload"] {
 
 .profile-bottom-container {
   padding: 0 10% 5% 10%;
-  background-color: #EDC7B7;
+  background-color: #fff;
 }
 
 .accordion-item {
@@ -792,5 +791,6 @@ form input[id="fileToUpload"] {
 
 .form-radius {
   border-radius: 5px;
-  border:1px solid #BAB2B5;
+  border:1px solid #AC3B61;
+  
 }
